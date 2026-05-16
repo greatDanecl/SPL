@@ -35,9 +35,9 @@ HOME_PATTERN = re.compile(r'^(HS|RAB|GAM|GPM)', re.IGNORECASE)
 SIM_PATTERN = re.compile(r'^(ISIM|SIM|ASS)', re.IGNORECASE)
 
 ABSENCE_ACTIVITY_TYPES = {"DayOff", "Vacation", "Medical", "OOF"}
-ABSENCE_CODES = {"VAC", "SICK", "OOF", "VUSA", "DO", "DH", "DB", "DR",
+ABSENCE_CODES = {"VAC", "VC", "SICK", "LCM", "OOF", "VUSA", "DO", "DH", "DB", "DR",
                  "DOR1", "DOR2", "DOR3", "DOR4", "DW", "DOM", "Q", "LAC", "LFS"}
-PROLONGED_ABSENCE_CODES = {"VAC", "SICK", "OOF"}
+PROLONGED_ABSENCE_CODES = {"VAC", "VC", "SICK", "LCM", "OOF"}
 
 def classify_activity(code):
     if pd.isna(code) or code == "":
@@ -63,10 +63,10 @@ def classify_activity(code):
         return "Blank", "Día Blanco"
     if code_str in ("DO", "DH", "DB", "DR", "DOR1", "DOR2", "DOR3", "DOR4", "DW", "DOM", "LAC", "LFS"):
         return "DayOff", "Día Libre"
-    if code_str == "VAC":
+    if code_str in ("VAC", "VC"):
         return "Vacation", "Vacaciones"
-    if code_str == "SICK":
-        return "Medical", "Licencia Médica"
+    if code_str in ("SICK", "LCM"):
+        return "Medical", "Licencia Medica"
     if code_str == "OOF":
         return "OOF", "Fuera de Vuelo"
     if code_str == "VUSA":
@@ -313,8 +313,8 @@ def compute_monthly_kpis(data: pd.DataFrame) -> pd.DataFrame:
         flight_sectors = len(flight)
         days_worked = grp[grp["activity_type"] == "Flight"]["str_dt"].nunique()
         day_off = grp[grp["activity_type"] == "DayOff"]["str_dt"].nunique()
-        sick_days = grp[grp["activity"].str.upper() == "SICK"]["str_dt"].nunique()
-        vac_days = grp[grp["activity"].str.upper() == "VAC"]["str_dt"].nunique()
+        sick_days = grp[grp["activity"].str.upper().isin({"SICK", "LCM"})]["str_dt"].nunique()
+        vac_days = grp[grp["activity"].str.upper().isin({"VAC", "VC"})]["str_dt"].nunique()
         oof_days = grp[grp["activity"].str.upper() == "OOF"]["str_dt"].nunique()
         sim_days = grp[grp["activity_type"] == "SIM"]["str_dt"].nunique()
         asb_days = grp[grp["activity_type"] == "Airport Stand by"]["str_dt"].nunique()
