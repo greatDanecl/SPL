@@ -8,102 +8,156 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --red:#E8002D;--navy:#1A1464;--navyl:#2B2A8C;--navyll:#3D3BAF;
-  --bg:#0D0C2B;--bg2:#13124A;--bg3:#1C1B5E;--card:#16155A;
-  --border:#2E2D7A;--text:#E8E8FF;--text2:#A0A0D8;
-  --green:#00D4AA;--yellow:#FFD166;--orange:#FF6B35;--purple:#9B59B6;
-  --r:12px;--shadow:0 4px 24px rgba(0,0,0,.45);
-  --font:'Inter','Segoe UI',sans-serif
+  /* Brand */
+  --red:#D0021B;--red-l:#F5334F;--red-xl:#FFE5E8;
+  --navy:#1A1464;--navy-l:#2B2A8C;--navy-xl:#EEEEFF;
+  /* Surface — light theme */
+  --bg:#F4F5FA;--bg2:#FFFFFF;--bg3:#F0F1F8;
+  --card:#FFFFFF;--card2:#F8F9FE;
+  --border:#DDE0EF;--border2:#C8CBDF;
+  --text:#1A1C2E;--text2:#5A5D7A;--text3:#9093AF;
+  /* Accent */
+  --green:#0B8F72;--green-l:#E6F7F3;
+  --yellow:#C47B00;--yellow-l:#FFF4DC;
+  --orange:#C24A0A;--orange-l:#FFF0E8;
+  --purple:#6B3FA0;--purple-l:#F2EAFF;
+  /* Shadows */
+  --sh1:0 1px 4px rgba(26,20,100,.06);
+  --sh2:0 4px 16px rgba(26,20,100,.10);
+  --sh3:0 8px 32px rgba(26,20,100,.14);
+  --r:10px;--font:'Inter','Segoe UI',sans-serif
 }
 html,body{background:var(--bg);color:var(--text);font-family:var(--font);
   font-size:14px;min-height:100vh;-webkit-font-smoothing:antialiased}
 ::-webkit-scrollbar{width:5px;height:5px}
-::-webkit-scrollbar-track{background:var(--bg2)}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
-.app{min-height:100vh;display:flex;flex-direction:column;
-  background:linear-gradient(160deg,var(--bg) 0%,var(--bg2) 100%)}
+::-webkit-scrollbar-track{background:var(--bg3)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 
-/* header */
-header{display:flex;align-items:center;justify-content:space-between;
-  padding:12px 28px;
-  background:linear-gradient(90deg,var(--navy) 0%,var(--navyl) 60%,rgba(232,0,45,.12) 100%);
-  border-bottom:1px solid var(--border);box-shadow:var(--shadow);
-  position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:8px}
+/* ── App shell ── */
+.app{min-height:100vh;display:flex;flex-direction:column}
+
+/* ── Header ── */
+header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 28px;height:60px;
+  background:#fff;
+  border-bottom:2px solid var(--red);
+  box-shadow:var(--sh2);
+  position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:8px
+}
 .hdr-left{display:flex;align-items:center;gap:14px}
-.logo{height:42px;filter:drop-shadow(0 0 8px rgba(232,0,45,.5))}
-.hdr-title{font-size:1.2rem;font-weight:700;color:#fff;letter-spacing:.02em;line-height:1.2}
-.hdr-sub{font-size:.72rem;color:var(--text2);text-transform:uppercase;letter-spacing:.06em}
-.hdr-right{font-size:.8rem;color:var(--text2);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.hdr-val{color:var(--yellow);font-weight:600}
-.hdr-badge{background:rgba(232,0,45,.18);color:var(--red);
-  border:1px solid rgba(232,0,45,.3);border-radius:20px;
-  padding:2px 10px;font-size:.7rem;font-weight:600}
+.logo{height:36px}
+.hdr-divider{width:1px;height:32px;background:var(--border)}
+.hdr-title{font-size:1.05rem;font-weight:700;color:var(--navy);letter-spacing:.01em}
+.hdr-sub{font-size:.7rem;color:var(--text2);letter-spacing:.04em;text-transform:uppercase}
+.hdr-right{display:flex;align-items:center;gap:10px;font-size:.78rem;color:var(--text2)}
+.hdr-period{color:var(--navy);font-weight:600}
+.hdr-badge{
+  background:var(--navy-xl);color:var(--navy-l);
+  border:1px solid #C0C0E8;border-radius:20px;
+  padding:2px 10px;font-size:.68rem;font-weight:600
+}
 
-/* controls */
-.ctrl-bar{display:flex;gap:14px;padding:14px 28px 12px;
-  background:var(--bg2);border-bottom:1px solid var(--border);flex-wrap:wrap;align-items:flex-end}
-.ctrl-grp{display:flex;flex-direction:column;gap:5px;min-width:170px}
-.ctrl-grp.wide{flex:1;min-width:220px}
-.ctrl-label{font-size:.7rem;font-weight:700;color:var(--text2);
-  text-transform:uppercase;letter-spacing:.08em}
-select{background:var(--bg3);color:var(--text);border:1px solid var(--border);
-  border-radius:8px;padding:8px 12px;font-size:.88rem;font-family:var(--font);
+/* ── Controls bar ── */
+.ctrl-bar{
+  display:flex;gap:12px;padding:12px 28px;
+  background:#fff;border-bottom:1px solid var(--border);
+  flex-wrap:wrap;align-items:flex-end;
+  box-shadow:var(--sh1)
+}
+.ctrl-grp{display:flex;flex-direction:column;gap:4px;min-width:160px}
+.ctrl-grp.wide{flex:1;min-width:200px}
+.ctrl-label{
+  font-size:.67rem;font-weight:700;color:var(--text2);
+  text-transform:uppercase;letter-spacing:.09em
+}
+select{
+  background:#fff;color:var(--text);
+  border:1px solid var(--border2);border-radius:8px;
+  padding:7px 30px 7px 10px;font-size:.86rem;font-family:var(--font);
   cursor:pointer;width:100%;appearance:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%23A0A0D8' d='M1 1l5 5 5-5' stroke='%23A0A0D8' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 10px center;
-  padding-right:30px;transition:border-color .2s}
-select:hover,select:focus{border-color:var(--navyll);outline:none}
-select option{background:var(--bg3);color:var(--text)}
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath fill='none' stroke='%235A5D7A' stroke-width='1.5' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 9px center;
+  transition:border-color .18s,box-shadow .18s
+}
+select:hover{border-color:var(--navy-l)}
+select:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(26,20,100,.1)}
+select:disabled{background:var(--bg3);color:var(--text3);cursor:default}
+select option{background:#fff;color:var(--text)}
 
-/* kpi row */
-.kpi-row{display:flex;flex-wrap:wrap;gap:12px;padding:14px 28px 8px;background:var(--bg2)}
-.kpi{flex:1;min-width:145px;background:var(--card);border:1px solid var(--border);
-  border-radius:var(--r);padding:14px 16px;
-  transition:transform .18s,box-shadow .18s;cursor:default;
-  box-shadow:0 2px 10px rgba(0,0,0,.3)}
-.kpi:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.5);border-color:var(--navyll)}
+/* ── KPI row ── */
+.kpi-row{
+  display:flex;flex-wrap:wrap;gap:12px;
+  padding:16px 28px 8px;background:var(--bg)
+}
+.kpi{
+  flex:1;min-width:150px;background:var(--card);
+  border:1px solid var(--border);border-radius:var(--r);
+  padding:14px 16px;box-shadow:var(--sh1);
+  transition:transform .15s,box-shadow .15s
+}
+.kpi:hover{transform:translateY(-2px);box-shadow:var(--sh2)}
 .kpi-inner{display:flex;align-items:center;gap:10px}
-.kpi-icon{font-size:1.5rem;opacity:.85;flex-shrink:0}
-.kpi-lbl{font-size:.68rem;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px}
-.kpi-val{font-size:1.4rem;font-weight:700;line-height:1.1;letter-spacing:-.01em}
-.kpi-sub{font-size:.68rem;color:var(--text2);margin-top:2px}
+.kpi-icon{font-size:1.5rem;flex-shrink:0}
+.kpi-lbl{font-size:.66rem;color:var(--text2);text-transform:uppercase;
+  letter-spacing:.09em;margin-bottom:3px}
+.kpi-val{font-size:1.4rem;font-weight:700;line-height:1.1}
+.kpi-sub{font-size:.68rem;color:var(--text3);margin-top:2px}
 
-/* charts */
-.content{flex:1;padding:16px 28px 28px}
+/* ── Content ── */
+.content{flex:1;padding:16px 28px 28px;background:var(--bg)}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
 .row1{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:14px}
-.chart-card{background:var(--card);border:1px solid var(--border);
+.chart-card{
+  background:var(--card);border:1px solid var(--border);
   border-radius:var(--r);padding:4px 6px;
-  box-shadow:0 2px 10px rgba(0,0,0,.25);overflow:hidden;transition:box-shadow .2s}
-.chart-card:hover{box-shadow:0 6px 28px rgba(0,0,0,.45)}
+  box-shadow:var(--sh1);overflow:hidden;transition:box-shadow .18s
+}
+.chart-card:hover{box-shadow:var(--sh2)}
 
-/* diff badge inline */
-.diff-badge{display:inline-flex;align-items:center;gap:4px;
-  border-radius:20px;padding:2px 10px;font-size:.78rem;font-weight:700}
-.diff-badge.pos{background:rgba(0,212,170,.15);color:var(--green);border:1px solid rgba(0,212,170,.3)}
-.diff-badge.neg{background:rgba(232,0,45,.12);color:var(--red);border:1px solid rgba(232,0,45,.25)}
-.diff-badge.nt{background:rgba(255,209,102,.1);color:var(--yellow);border:1px solid rgba(255,209,102,.25)}
+/* ── Empty state ── */
+.empty-state{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:16px;padding:60px 20px;
+  color:var(--text3);text-align:center
+}
+.empty-icon{font-size:3.5rem;opacity:.4}
+.empty-title{font-size:1.15rem;font-weight:600;color:var(--text2)}
+.empty-sub{font-size:.88rem;max-width:380px;line-height:1.6}
+.empty-arrows{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+.arrow-step{
+  display:flex;align-items:center;gap:6px;
+  background:var(--navy-xl);border:1px solid #C0C0E8;
+  border-radius:20px;padding:5px 12px;
+  font-size:.78rem;color:var(--navy-l);font-weight:600
+}
 
-/* loader */
-#loader{position:fixed;inset:0;background:rgba(13,12,43,.88);z-index:999;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
-.spinner{width:44px;height:44px;border:3px solid var(--border);
+/* ── Loader ── */
+#loader{position:fixed;inset:0;background:rgba(244,245,250,.92);z-index:999;
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:16px}
+.spinner{width:40px;height:40px;border:3px solid var(--border2);
   border-top-color:var(--red);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .loader-txt{color:var(--text2);font-size:.9rem}
 #loader.hidden{display:none}
 
-footer{padding:8px 28px;font-size:.7rem;color:var(--text2);
-  border-top:1px solid var(--border);background:var(--bg2);
-  display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px;opacity:.75}
+/* ── Footer ── */
+footer{
+  padding:8px 28px;font-size:.68rem;color:var(--text3);
+  border-top:1px solid var(--border);background:#fff;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px
+}
 
 @media(max-width:768px){
   header,.ctrl-bar,.kpi-row,.content{padding-left:14px;padding-right:14px}
   .row2{grid-template-columns:1fr}
-  .ctrl-grp{min-width:140px}
+  .ctrl-grp{min-width:130px}
+  header{height:auto;padding-top:10px;padding-bottom:10px}
 }
 @media(max-width:480px){
-  .logo{height:32px}.hdr-title{font-size:1rem}
+  .logo{height:28px}
+  .hdr-divider,.hdr-right{display:none}
   .kpi,.ctrl-grp,.ctrl-grp.wide{min-width:100%}
 }
 </style>
@@ -111,11 +165,16 @@ footer{padding:8px 28px;font-size:.7rem;color:var(--text2);
 <body>
 <div class="app">
 
-<div id="loader"><div class="spinner"></div><div class="loader-txt">Cargando datos SPL…</div></div>
+<div id="loader">
+  <div class="spinner"></div>
+  <div class="loader-txt">Cargando datos SPL…</div>
+</div>
 
+<!-- Header -->
 <header>
   <div class="hdr-left">
     <img src="SPL_logo.png" class="logo" alt="SPL">
+    <div class="hdr-divider"></div>
     <div>
       <div class="hdr-title">Dashboard de Roles</div>
       <div class="hdr-sub">Sindicato de Pilotos LATAM</div>
@@ -123,26 +182,36 @@ footer{padding:8px 28px;font-size:.7rem;color:var(--text2);
   </div>
   <div class="hdr-right">
     <span>Período más reciente:</span>
-    <span class="hdr-val" id="hdr-period">—</span>
+    <span class="hdr-period" id="hdr-period">—</span>
     <span class="hdr-badge" id="hdr-gen">—</span>
   </div>
 </header>
 
+<!-- Controls -->
 <div class="ctrl-bar">
   <div class="ctrl-grp">
+    <span class="ctrl-label">Flota</span>
+    <select id="sel-fleet">
+      <option value="">— Selecciona flota —</option>
+      <option value="Wide Body (787)">Wide Body (787)</option>
+      <option value="Narrow Body (32X)">Narrow Body (32X)</option>
+    </select>
+  </div>
+  <div class="ctrl-grp">
     <span class="ctrl-label">Cargo</span>
-    <select id="sel-rank">
+    <select id="sel-rank" disabled>
+      <option value="">— Selecciona cargo —</option>
       <option value="CP">Capitán (CP)</option>
       <option value="FO">Primer Oficial (FO)</option>
     </select>
   </div>
   <div class="ctrl-grp">
     <span class="ctrl-label">Período</span>
-    <select id="sel-period"></select>
+    <select id="sel-period" disabled></select>
   </div>
   <div class="ctrl-grp wide">
     <span class="ctrl-label">Piloto (opcional)</span>
-    <select id="sel-pilot">
+    <select id="sel-pilot" disabled>
       <option value="">— Ver resumen general —</option>
     </select>
   </div>
@@ -158,52 +227,64 @@ footer{padding:8px 28px;font-size:.7rem;color:var(--text2);
 </div>
 
 <script>
-/* ── Palette ────────────────────────────────────────────────────────────── */
-const C={red:'#E8002D',navy:'#1A1464',navyl:'#2B2A8C',navyll:'#3D3BAF',
-  bg:'#0D0C2B',bg2:'#13124A',bg3:'#1C1B5E',card:'#16155A',
-  border:'#2E2D7A',text:'#E8E8FF',text2:'#A0A0D8',
-  green:'#00D4AA',yellow:'#FFD166',orange:'#FF6B35',purple:'#9B59B6'};
-const PIE_COLORS=[C.red,C.green,C.yellow,C.orange,C.purple,C.navyll,C.navyl,'#06D6A0','#EF476F'];
+/* ── Palette (light) ─────────────────────────────────────────────────────── */
+const C={
+  red:'#D0021B', redl:'#F5334F', navy:'#1A1464', navyl:'#2B2A8C', navyll:'#3D3BAF',
+  bg:'#F4F5FA', card:'#FFFFFF', border:'#DDE0EF',
+  text:'#1A1C2E', text2:'#5A5D7A', text3:'#9093AF',
+  green:'#0B8F72', greenl:'rgba(11,143,114,.15)',
+  yellow:'#C47B00', yellowl:'rgba(196,123,0,.15)',
+  orange:'#C24A0A', orangel:'rgba(194,74,10,.12)',
+  purple:'#6B3FA0',
+};
+const PIE_COLORS=['#D0021B','#0B8F72','#C47B00','#C24A0A','#6B3FA0',
+                  '#2B2A8C','#3D3BAF','#067D5A','#E8003A'];
 
-/* ── Plotly base layout ─────────────────────────────────────────────────── */
+/* ── Plotly base layout ───────────────────────────────────────────────────── */
 function lay(extra={}){
   return Object.assign({
-    paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',
-    font:{family:"Inter,'Segoe UI',sans-serif",color:C.text,size:12},
-    margin:{l:48,r:18,t:44,b:40},
-    xaxis:{gridcolor:C.border,linecolor:C.border,tickfont:{color:C.text2},
-           zeroline:false,showline:true},
-    yaxis:{gridcolor:C.border,linecolor:C.border,tickfont:{color:C.text2},
-           zeroline:false,showline:false},
-    legend:{bgcolor:'rgba(0,0,0,0)',font:{color:C.text2}},
+    paper_bgcolor:'rgba(0,0,0,0)', plot_bgcolor:'rgba(0,0,0,0)',
+    font:{family:"Inter,'Segoe UI',sans-serif", color:C.text, size:12},
+    margin:{l:52,r:18,t:44,b:40},
+    xaxis:{gridcolor:'#EEF0FA', linecolor:'#DDE0EF', tickfont:{color:C.text2},
+           zeroline:false, showline:true},
+    yaxis:{gridcolor:'#EEF0FA', linecolor:'#DDE0EF', tickfont:{color:C.text2},
+           zeroline:false, showline:false},
+    legend:{bgcolor:'rgba(0,0,0,0)', font:{color:C.text2, size:11}},
     colorway:[C.red,C.navyll,C.green,C.yellow,C.orange,C.purple],
     hovermode:'closest',
-  },extra);
+    hoverlabel:{bgcolor:'#fff', bordercolor:C.border,
+                font:{color:C.text, size:12}},
+  }, extra);
 }
-const CFG={displayModeBar:false,responsive:true};
+const CFG={displayModeBar:false, responsive:true};
 
-/* ── State & data ───────────────────────────────────────────────────────── */
+/* ── State ───────────────────────────────────────────────────────────────── */
 let D=null;
-let S={rank:'CP',period:null,pilot:''};
+let S={fleet:'', rank:'', period:'', pilot:''};
 
-/* ── Helpers ────────────────────────────────────────────────────────────── */
+/* ── Utils ───────────────────────────────────────────────────────────────── */
 const $=id=>document.getElementById(id);
 function el(tag,cls,html=''){const e=document.createElement(tag);if(cls)e.className=cls;if(html)e.innerHTML=html;return e;}
-function fmtH(v){return (v===null||v===undefined||isNaN(v))?'—':v.toFixed(1)+'h';}
-function fmtN(v){return (v===null||v===undefined||isNaN(v))?'—':v.toString();}
-function fmtD(v){// diff hours
-  if(v===null||v===undefined||isNaN(v)) return '—';
-  const s=v>=0?'+':'';
-  return s+v.toFixed(1)+'h';
+function fmtH(v){return(v===null||v===undefined||isNaN(v))?'—':Number(v).toFixed(1)+' h';}
+function fmtD(v){
+  if(v===null||v===undefined||isNaN(v))return'—';
+  return(v>=0?'+':'')+Number(v).toFixed(1)+' h';
 }
-function fmtP(p){return D.periods_fmt[p]||p;}
+function fmtN(v){return(v===null||v===undefined)?'—':String(v);}
+function fmtP(p){return D&&D.periods_fmt[p]?D.periods_fmt[p]:p;}
 function diffColor(v){
-  if(v===null||v===undefined||isNaN(v)) return C.text2;
-  if(Math.abs(v)<=0.5) return C.yellow;
+  if(v===null||v===undefined||isNaN(v))return C.text3;
+  if(Math.abs(v)<=0.5)return C.yellow;
   return v>0?C.green:C.red;
 }
+function diffBg(v){
+  if(v===null||v===undefined||isNaN(v))return'rgba(90,93,122,.08)';
+  if(Math.abs(v)<=0.5)return C.yellowl;
+  return v>0?C.greenl:C.orangel;
+}
 function kpiCard(lbl,val,sub,col,icon){
-  return `<div class="kpi"><div class="kpi-inner">
+  return`<div class="kpi"><div class="kpi-inner">
     <span class="kpi-icon">${icon}</span>
     <div><div class="kpi-lbl">${lbl}</div>
     <div class="kpi-val" style="color:${col}">${val}</div>
@@ -211,432 +292,494 @@ function kpiCard(lbl,val,sub,col,icon){
   </div></div>`;
 }
 function chartDiv(id,h=340){
-  const d=el('div','chart-card');d.innerHTML=`<div id="${id}" style="height:${h}px"></div>`;return d;
+  const d=el('div','chart-card');
+  d.innerHTML=`<div id="${id}" style="height:${h}px"></div>`;
+  return d;
 }
 
-/* ── Boot ───────────────────────────────────────────────────────────────── */
+/* ── Boot ────────────────────────────────────────────────────────────────── */
 async function boot(){
   try{
     const r=await fetch('data.json');
     D=await r.json();
   }catch(e){
-    $('loader').innerHTML='<div style="color:var(--red);padding:20px;text-align:center;font-size:1rem">Error al cargar data.json.<br>Ejecuta desde un servidor web o GitHub Pages.</div>';
+    $('loader').innerHTML='<div style="color:var(--red);padding:20px;text-align:center">Error al cargar data.json.<br>Ejecuta desde un servidor web o GitHub Pages.</div>';
     return;
   }
-  $('hdr-period').textContent=fmtP(D.periods_exe[0]);
-  $('hdr-gen').textContent='Datos: '+D.generated_at;
-  $('ftr-gen').textContent='Generado: '+D.generated_at;
+  $('hdr-period').textContent = fmtP(D.periods_exe[0]);
+  $('hdr-gen').textContent    = 'Datos: '+D.generated_at;
+  $('ftr-gen').textContent    = 'Generado: '+D.generated_at;
 
+  // Populate period selector
   const sp=$('sel-period');
+  sp.innerHTML='';
   D.periods_exe.forEach(p=>{
     const o=document.createElement('option');
-    o.value=p;o.textContent=fmtP(p);sp.appendChild(o);
+    o.value=p; o.textContent=fmtP(p); sp.appendChild(o);
   });
-  S.period=D.periods_exe[0];
 
-  fillPilots('CP');
-
-  $('sel-rank').addEventListener('change',e=>{
-    S.rank=e.target.value;
-    fillPilots(S.rank);
-    S.pilot='';$('sel-pilot').value='';
+  // Events
+  $('sel-fleet').addEventListener('change', e=>{
+    S.fleet=e.target.value;
+    S.rank=''; S.period=''; S.pilot='';
+    $('sel-rank').value='';
+    $('sel-pilot').innerHTML='<option value="">— Ver resumen general —</option>';
+    $('sel-rank').disabled  = !S.fleet;
+    $('sel-period').disabled= !S.fleet;
+    $('sel-pilot').disabled = true;
+    if(S.fleet){
+      $('sel-period').value = D.periods_exe[0];
+      S.period = D.periods_exe[0];
+    }
     render();
   });
-  $('sel-period').addEventListener('change',e=>{S.period=e.target.value;render();});
-  $('sel-pilot').addEventListener('change',e=>{S.pilot=e.target.value;render();});
+
+  $('sel-rank').addEventListener('change', e=>{
+    S.rank=e.target.value;
+    S.pilot='';
+    fillPilots();
+    $('sel-pilot').disabled = !S.rank;
+    $('sel-pilot').value='';
+    render();
+  });
+
+  $('sel-period').addEventListener('change', e=>{
+    S.period=e.target.value;
+    render();
+  });
+
+  $('sel-pilot').addEventListener('change', e=>{
+    S.pilot=e.target.value;
+    render();
+  });
 
   $('loader').classList.add('hidden');
-  render();
+  showEmpty(); // dashboard starts empty
 }
 
-function fillPilots(rank){
+function fillPilots(){
   const sp=$('sel-pilot');
   sp.innerHTML='<option value="">— Ver resumen general —</option>';
-  (D.pilots[rank]||[]).forEach(p=>{
+  if(!S.rank||!S.fleet) return;
+  const list=(D.pilots[S.rank]||{})[S.fleet]||[];
+  list.forEach(p=>{
     const o=document.createElement('option');
-    o.value=p.id;o.textContent=p.name;sp.appendChild(o);
+    o.value=p.id; o.textContent=p.name; sp.appendChild(o);
   });
 }
 
-function render(){S.pilot?renderPilot():renderOverview();}
+/* ── Empty state ─────────────────────────────────────────────────────────── */
+function showEmpty(){
+  $('kpi-row').innerHTML='';
+  $('content').innerHTML=`
+    <div class="empty-state">
+      <div class="empty-icon">✈️</div>
+      <div class="empty-title">Selecciona los filtros para comenzar</div>
+      <div class="empty-sub">Elige la flota, el cargo y el período para ver los indicadores y gráficos del grupo, o selecciona un piloto específico para ver su análisis individual.</div>
+      <div class="empty-arrows">
+        <div class="arrow-step">1 · Flota</div>
+        <div class="arrow-step">→</div>
+        <div class="arrow-step">2 · Cargo</div>
+        <div class="arrow-step">→</div>
+        <div class="arrow-step">3 · Período</div>
+        <div class="arrow-step">→</div>
+        <div class="arrow-step">4 · Piloto (opcional)</div>
+      </div>
+    </div>`;
+}
 
-/* ════════════════════════════════════════════════════════════════════════════
+/* ── Render router ───────────────────────────────────────────────────────── */
+function render(){
+  if(!S.fleet || !S.rank || !S.period){ showEmpty(); return; }
+  S.pilot ? renderPilot() : renderOverview();
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
    OVERVIEW
-═══════════════════════════════════════════════════════════════════════════ */
+══════════════════════════════════════════════════════════════════════════ */
 function renderOverview(){
-  const {rank,period}=S;
-  const ov=(D.overview[rank]||{})[period];
-  const tr=D.trends[rank]||{};
+  const{fleet,rank,period}=S;
+  const ov=((D.overview[rank]||{})[fleet]||{})[period];
+  const tr=(D.trends[rank]||{})[fleet]||{};
   const rl=rank==='CP'?'Capitanes':'Primeros Oficiales';
   const pf=fmtP(period);
+  const fl=fleet==='Wide Body (787)'?'Wide Body':'Narrow Body';
 
   if(!ov){
-    $('kpi-row').innerHTML='<div style="color:var(--text2);padding:8px">Sin datos para este período.</div>';
-    $('content').innerHTML='';return;
+    $('kpi-row').innerHTML='';
+    $('content').innerHTML='<div style="padding:24px;color:var(--text3)">Sin datos para este período / segmento.</div>';
+    return;
   }
 
-  /* KPI cards */
   const avgDiff=ov.avg_diff;
-  const diffStr=fmtD(avgDiff);
-  const diffLbl=avgDiff===null?'sin datos comparativos':
-    (avgDiff>0.5?'Ejecutado > Publicado':avgDiff<-0.5?'Publicado > Ejecutado':'Prácticamente iguales');
+  const diffLbl=avgDiff===null?'sin datos':
+    avgDiff>0.5?'Ejecutado mayor que publicado':
+    avgDiff<-0.5?'Publicado mayor que ejecutado':'Prácticamente iguales';
 
   $('kpi-row').innerHTML=
-    kpiCard('Total Pilotos',ov.n_total,`${ov.n_active} activos en período`,C.red,'✈')+
-    kpiCard('Horas Ejec. Prom.',fmtH(ov.avg_exe_hrs),'horas bloque ejecutadas',C.green,'⏱')+
-    kpiCard('Horas Pub. Prom.',fmtH(ov.avg_pub_hrs),'horas bloque publicadas',C.orange,'📋')+
-    kpiCard('Diferencia Prom.',diffStr,diffLbl,diffColor(avgDiff),'📊')+
-    kpiCard('Sectores Prom.',fmtN(ov.avg_sectors&&Math.round(ov.avg_sectors)),'vuelos ejecutados',C.yellow,'🛫');
+    kpiCard('Total Pilotos', ov.n_total, `${ov.n_active} activos · ${fl} · ${rl}`, C.navy,'✈')+
+    kpiCard('Horas Ejec. Prom.', fmtH(ov.avg_exe_hrs), 'horas bloque ejecutadas', C.green,'⏱')+
+    kpiCard('Horas Pub. Prom.', fmtH(ov.avg_pub_hrs), 'horas bloque publicadas', C.navyll,'📋')+
+    kpiCard('Diferencia Prom.', fmtD(avgDiff), diffLbl, diffColor(avgDiff),'📊')+
+    kpiCard('Sectores Prom.', fmtN(ov.avg_sectors&&Math.round(ov.avg_sectors)), 'vuelos ejecutados', C.orange,'🛫');
 
-  /* Build content */
-  const cnt=$('content');cnt.innerHTML='';
+  const cnt=$('content'); cnt.innerHTML='';
 
-  const r1=el('div','row2');cnt.appendChild(r1);
+  const r1=el('div','row2'); cnt.appendChild(r1);
   r1.appendChild(chartDiv('ch-hist-hrs'));
   r1.appendChild(chartDiv('ch-diff-dist'));
 
-  const r2=el('div','row2');cnt.appendChild(r2);
+  const r2=el('div','row2'); cnt.appendChild(r2);
   r2.appendChild(chartDiv('ch-pie'));
   r2.appendChild(chartDiv('ch-diff-bar'));
 
-  const r3=el('div','row1');cnt.appendChild(r3);
-  r3.appendChild(chartDiv('ch-trend',310));
+  const r3=el('div','row1'); cnt.appendChild(r3);
+  r3.appendChild(chartDiv('ch-trend',320));
 
-  const r4=el('div','row1');cnt.appendChild(r4);
-  r4.appendChild(chartDiv('ch-trend-diff',310));
+  const r4=el('div','row1'); cnt.appendChild(r4);
+  r4.appendChild(chartDiv('ch-trend-diff',320));
 
-  const r5=el('div','row1');cnt.appendChild(r5);
-  r5.appendChild(chartDiv('ch-top',500));
+  const r5=el('div','row1'); cnt.appendChild(r5);
+  r5.appendChild(chartDiv('ch-top',520));
 
   /* 1 – Histogram flight hours */
   const h=ov.hist_hrs;
   const midH=h.edges.length>1?h.edges.slice(0,-1).map((e,i)=>+(e+(h.edges[i+1]-e)/2).toFixed(2)):[];
   Plotly.newPlot('ch-hist-hrs',[{
-    type:'bar',x:midH,y:h.counts,width:midH.length>1?(midH[1]-midH[0])*.9:1,
-    marker:{color:C.red,opacity:.85},
+    type:'bar', x:midH, y:h.counts,
+    width:midH.length>1?(midH[1]-midH[0])*.88:1,
+    marker:{color:C.red, opacity:.8},
     hovertemplate:'<b>%{x:.0f} h</b><br>%{y} pilotos<extra></extra>',
     name:'Horas vuelo'
   }],lay({
-    title:{text:`Distribución Horas Ejecutadas – ${rl} – ${pf}`,font:{size:13,color:C.text}},
-    xaxis:{...lay().xaxis,title:'Horas Bloque'},
-    yaxis:{...lay().yaxis,title:'Nº Pilotos'},
-    shapes:ov.avg_exe_hrs?[{type:'line',x0:ov.avg_exe_hrs,x1:ov.avg_exe_hrs,y0:0,y1:1,yref:'paper',
-      line:{color:C.yellow,width:2,dash:'dash'}}]:[],
-    annotations:ov.avg_exe_hrs?[{x:ov.avg_exe_hrs,y:1,yref:'paper',
-      text:`Prom: ${fmtH(ov.avg_exe_hrs)}`,font:{color:C.yellow,size:11},
-      showarrow:false,yanchor:'bottom'}]:[]
+    title:{text:`Distribución Horas Ejecutadas · ${fl} · ${rl} · ${pf}`,font:{size:12.5,color:C.text}},
+    xaxis:{...lay().xaxis, title:'Horas Bloque'},
+    yaxis:{...lay().yaxis, title:'Nº Pilotos'},
+    shapes: ov.avg_exe_hrs?[{type:'line',x0:ov.avg_exe_hrs,x1:ov.avg_exe_hrs,y0:0,y1:1,
+      yref:'paper',line:{color:C.navy,width:2,dash:'dash'}}]:[],
+    annotations: ov.avg_exe_hrs?[{x:ov.avg_exe_hrs,y:1,yref:'paper',
+      text:`Prom: ${fmtH(ov.avg_exe_hrs)}`,font:{color:C.navy,size:11},
+      showarrow:false,yanchor:'bottom',xanchor:'left'}]:[]
   }),CFG);
 
-  /* 2 – Diff distribution histogram */
+  /* 2 – Diff histogram */
   const hd=ov.hist_diff;
   const midD=hd.edges.length>1?hd.edges.slice(0,-1).map((e,i)=>+(e+(hd.edges[i+1]-e)/2).toFixed(2)):[];
-  const diffColors=midD.map(v=>v>0.5?C.green:v<-0.5?C.red:C.yellow);
   Plotly.newPlot('ch-diff-dist',[{
-    type:'bar',x:midD,y:hd.counts,
-    width:midD.length>1?(midD[1]-midD[0])*.9:1,
-    marker:{color:diffColors,opacity:.85},
+    type:'bar', x:midD, y:hd.counts,
+    width:midD.length>1?(midD[1]-midD[0])*.88:1,
+    marker:{color:midD.map(v=>v>0.5?C.green:v<-0.5?C.red:C.yellow), opacity:.8},
     hovertemplate:'<b>Diferencia: %{x:+.1f} h</b><br>%{y} pilotos<extra></extra>',
     name:'Diferencia'
   }],lay({
-    title:{text:`Diferencia Ejec−Pub – ${rl} – ${pf}`,font:{size:13,color:C.text}},
-    xaxis:{...lay().xaxis,title:'Horas (+ = más ejecutado, − = más publicado)'},
-    yaxis:{...lay().yaxis,title:'Nº Pilotos'},
+    title:{text:`Diferencia Ejec−Pub · ${fl} · ${rl} · ${pf}`,font:{size:12.5,color:C.text}},
+    xaxis:{...lay().xaxis, title:'Horas (+ = más ejecutado, − = más publicado)'},
+    yaxis:{...lay().yaxis, title:'Nº Pilotos'},
     shapes:[{type:'line',x0:0,x1:0,y0:0,y1:1,yref:'paper',
-      line:{color:C.yellow,width:1.5,dash:'dot'}}]
+      line:{color:C.text2,width:1.5,dash:'dot'}}]
   }),CFG);
 
   /* 3 – Pie activities */
   const acts=ov.activities;
   const ak=Object.keys(acts).filter(k=>acts[k]>0);
   Plotly.newPlot('ch-pie',[{
-    type:'pie',labels:ak,values:ak.map(k=>acts[k]),hole:.42,
-    marker:{colors:PIE_COLORS},textinfo:'percent+label',
-    textfont:{color:'#fff',size:10},
+    type:'pie', labels:ak, values:ak.map(k=>acts[k]), hole:.42,
+    marker:{colors:PIE_COLORS, line:{color:'#fff',width:1.5}},
+    textinfo:'percent+label', textfont:{size:10},
+    insidetextorientation:'radial',
     hovertemplate:'<b>%{label}</b><br>%{value} días-piloto<br>%{percent}<extra></extra>'
   }],lay({
-    title:{text:`Composición de Actividades – ${rl} – ${pf}`,font:{size:13,color:C.text}},
-    showlegend:false,margin:{l:10,r:10,t:44,b:10}
+    title:{text:`Composición de Actividades · ${fl} · ${rl} · ${pf}`,font:{size:12.5,color:C.text}},
+    showlegend:false, margin:{l:10,r:10,t:44,b:10}
   }),CFG);
 
-  /* 4 – Diff summary bar: cuántos pilotos ejecutaron más / publicado más / igual */
+  /* 4 – Who flew more bar */
   Plotly.newPlot('ch-diff-bar',[{
     type:'bar',
     x:['Ejecutado\n> Publicado','Publicado\n> Ejecutado','Prácticamente\nIguales'],
-    y:[ov.n_more_exe,ov.n_more_pub,ov.n_equal],
-    marker:{color:[C.green,C.red,C.yellow],opacity:.9},
-    text:[ov.n_more_exe,ov.n_more_pub,ov.n_equal],
-    textposition:'outside',textfont:{color:C.text,size:13,weight:'bold'},
+    y:[ov.n_more_exe, ov.n_more_pub, ov.n_equal],
+    marker:{color:[C.green, C.red, C.yellow], opacity:.85,
+            line:{color:'#fff',width:1.5}},
+    text:[ov.n_more_exe, ov.n_more_pub, ov.n_equal],
+    textposition:'outside', textfont:{color:C.text, size:13, weight:'bold'},
     hovertemplate:'<b>%{x}</b><br>%{y} pilotos<extra></extra>',
     name:''
   }],lay({
-    title:{text:`¿Quién voló más? – ${rl} – ${pf}`,font:{size:13,color:C.text}},
-    yaxis:{...lay().yaxis,title:'Nº Pilotos'},
-    xaxis:{...lay().xaxis,tickfont:{color:C.text2,size:11}},
+    title:{text:`¿Quién voló más? · ${fl} · ${rl} · ${pf}`,font:{size:12.5,color:C.text}},
+    yaxis:{...lay().yaxis, title:'Nº Pilotos'},
+    xaxis:{...lay().xaxis, tickfont:{color:C.text2, size:11}},
     showlegend:false
   }),CFG);
 
-  /* 5 – Trend: exe hours per period */
-  const tp=tr.periods||[];
-  const ftp=tp.map(p=>fmtP(p));
+  /* 5 – Trend: exe hours */
+  const tp=tr.periods||[], ftp=tp.map(p=>fmtP(p));
   Plotly.newPlot('ch-trend',[
-    {type:'bar',x:ftp,y:tr.n_pilots,name:'Pilotos activos',
-     marker:{color:C.border,opacity:.5},yaxis:'y2',
-     hovertemplate:'<b>%{x}</b><br>Pilotos: %{y}<extra></extra>'},
-    {type:'scatter',mode:'lines+markers',x:ftp,y:tr.avg_exe,
-     name:'Horas ejec. prom.',line:{color:C.red,width:2.5},marker:{size:8},
+    {type:'bar', x:ftp, y:tr.n_pilots, name:'Pilotos activos',
+     marker:{color:'rgba(26,20,100,.08)', line:{color:C.border,width:1}},
+     yaxis:'y2', hovertemplate:'<b>%{x}</b><br>Pilotos: %{y}<extra></extra>'},
+    {type:'scatter', mode:'lines+markers', x:ftp, y:tr.avg_exe,
+     name:'Horas ejec. prom.', line:{color:C.red, width:2.5},
+     marker:{size:8, color:C.red, line:{color:'#fff',width:2}},
      hovertemplate:'<b>%{x}</b><br>%{y:.1f} h ejecutadas<extra></extra>'}
   ],lay({
-    title:{text:`Tendencia Horas Ejecutadas por Período – ${rl}`,font:{size:13,color:C.text}},
-    yaxis:{...lay().yaxis,title:'Horas Bloque Prom.'},
-    yaxis2:{overlaying:'y',side:'right',showgrid:false,
-      tickfont:{color:C.text2},title:'Nº Pilotos',titlefont:{color:C.text2}},
-    hovermode:'x unified',barmode:'overlay',
-    legend:{...lay().legend,orientation:'h',y:-0.18}
+    title:{text:`Tendencia Horas Ejecutadas · ${fl} · ${rl}`,font:{size:12.5,color:C.text}},
+    yaxis:{...lay().yaxis, title:'Horas Bloque Prom.'},
+    yaxis2:{overlaying:'y', side:'right', showgrid:false,
+      tickfont:{color:C.text3}, title:'Nº Pilotos', titlefont:{color:C.text3}},
+    hovermode:'x unified', barmode:'overlay',
+    legend:{...lay().legend, orientation:'h', y:-0.2}
   }),CFG);
 
-  /* 6 – Trend: exe vs pub hours per period */
-  const tdp=tr.diff_periods||[];
-  const ftdp=tdp.map(p=>fmtP(p));
+  /* 6 – Trend: exe vs pub + diff bar */
+  const tdp=tr.diff_periods||[], ftdp=tdp.map(p=>fmtP(p));
   Plotly.newPlot('ch-trend-diff',[
-    {type:'scatter',mode:'lines+markers',x:ftdp,y:tr.avg_pub_trend,
-     name:'Publicado prom.',line:{color:C.navyll,width:2},marker:{size:7},
-     hovertemplate:'<b>%{x}</b><br>Pub: %{y:.1f} h<extra></extra>'},
-    {type:'scatter',mode:'lines+markers',x:ftdp,y:tr.avg_exe_trend,
-     name:'Ejecutado prom.',line:{color:C.green,width:2.5},marker:{size:8},
+    {type:'scatter', mode:'lines+markers', x:ftdp, y:tr.avg_pub_trend,
+     name:'Publicado prom.', line:{color:C.navyll, width:2, dash:'dot'},
+     marker:{size:6}, hovertemplate:'<b>%{x}</b><br>Pub: %{y:.1f} h<extra></extra>'},
+    {type:'scatter', mode:'lines+markers', x:ftdp, y:tr.avg_exe_trend,
+     name:'Ejecutado prom.', line:{color:C.green, width:2.5},
+     marker:{size:8, line:{color:'#fff',width:2}},
      hovertemplate:'<b>%{x}</b><br>Ejec: %{y:.1f} h<extra></extra>'},
-    {type:'bar',x:ftdp,y:tr.avg_diff,name:'Diferencia (Ejec−Pub)',
-     marker:{color:tr.avg_diff.map(v=>v>=0?'rgba(0,212,170,.4)':'rgba(232,0,45,.35)')},
+    {type:'bar', x:ftdp, y:tr.avg_diff, name:'Diferencia (Ejec−Pub)',
+     marker:{color:tr.avg_diff.map(v=>v>=0?'rgba(11,143,114,.35)':'rgba(208,2,27,.3)'),
+             line:{color:'transparent'}},
      yaxis:'y2',
      hovertemplate:'<b>%{x}</b><br>Dif: %{y:+.1f} h<extra></extra>'}
   ],lay({
-    title:{text:`Ejecutado vs Publicado – ${rl}`,font:{size:13,color:C.text}},
-    yaxis:{...lay().yaxis,title:'Horas Bloque Prom.'},
-    yaxis2:{overlaying:'y',side:'right',showgrid:false,zeroline:true,
-      zerolinecolor:C.border,tickfont:{color:C.text2},
-      title:'Diferencia (h)',titlefont:{color:C.text2}},
-    hovermode:'x unified',barmode:'overlay',
-    legend:{...lay().legend,orientation:'h',y:-0.18}
+    title:{text:`Ejecutado vs Publicado · ${fl} · ${rl}`,font:{size:12.5,color:C.text}},
+    yaxis:{...lay().yaxis, title:'Horas Bloque Prom.'},
+    yaxis2:{overlaying:'y', side:'right', showgrid:false, zeroline:true,
+      zerolinecolor:C.border, tickfont:{color:C.text3},
+      title:'Diferencia (h)', titlefont:{color:C.text3}},
+    hovermode:'x unified', barmode:'overlay',
+    legend:{...lay().legend, orientation:'h', y:-0.2}
   }),CFG);
 
   /* 7 – Top 20 */
   const t=ov.top20;
   Plotly.newPlot('ch-top',[{
-    type:'bar',orientation:'h',x:t.hours,y:t.names,
-    marker:{color:t.hours,colorscale:[[0,C.navyl],[1,C.red]],showscale:false},
+    type:'bar', orientation:'h', x:t.hours, y:t.names,
+    marker:{
+      color:t.hours,
+      colorscale:[[0,'#E8EAFF'],[1,C.red]],
+      showscale:false,
+      line:{color:'#fff',width:1}
+    },
     hovertemplate:'<b>%{y}</b><br>%{x:.1f} h<extra></extra>',
     name:'Horas vuelo'
   }],lay({
-    title:{text:`Top 20 Horas Vuelo Ejecutadas – ${rl} – ${pf}`,font:{size:13,color:C.text}},
-    xaxis:{...lay().xaxis,title:'Horas Bloque'},
-    yaxis:{...lay().yaxis,autorange:'reversed',tickfont:{color:C.text2,size:10}},
-    height:500,margin:{l:130,r:18,t:44,b:40}
+    title:{text:`Top 20 Horas Vuelo Ejecutadas · ${fl} · ${rl} · ${pf}`,font:{size:12.5,color:C.text}},
+    xaxis:{...lay().xaxis, title:'Horas Bloque'},
+    yaxis:{...lay().yaxis, autorange:'reversed', tickfont:{color:C.text2, size:10}},
+    height:520, margin:{l:140,r:18,t:44,b:40}
   }),CFG);
 }
 
-/* ════════════════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════════════════════
    PILOT VIEW
-═══════════════════════════════════════════════════════════════════════════ */
+══════════════════════════════════════════════════════════════════════════ */
 function renderPilot(){
-  const {rank,period,pilot}=S;
+  const{fleet,rank,period,pilot}=S;
   const pd=D.pilot_data[pilot];
   if(!pd){renderOverview();return;}
 
   const rl=rank==='CP'?'Capitanes':'Primeros Oficiales';
+  const fl=fleet==='Wide Body (787)'?'Wide Body':'Narrow Body';
   const pf=fmtP(period);
   const pname=pd.name;
-  const chron=D.periods_chron;                     // chronological order
+  const fname=pname.split(' ')[0];
+  const chron=D.periods_chron;
   const fchron=chron.map(p=>fmtP(p));
   const cur=pd.history[period]||{};
-  const peers=(D.peer_stats[rank]||{})[period]||{};
-  const pt=D.peer_trends[rank]||{periods:[],avg_exe:[],avg_pub:[],avg_diff:[]};
+  const peers=((D.peer_stats[rank]||{})[fleet]||{})[period]||{};
+  const pt=((D.peer_trends[rank]||{})[fleet])||{periods:[],avg_exe:[],avg_pub:[],avg_diff:[]};
 
-  /* KPI cards */
   const diff=cur.diff_hrs;
-  const moreIs=cur.more_is;
-  const diffLabel=moreIs==='Ejecutado'?'Voló más que lo publicado':
-    moreIs==='Publicado'?'Publicado mayor que ejecutado':
-    moreIs==='Igual'?'Ejecutado ≈ Publicado':'Sin datos comparativos';
+  const diffLbl=cur.more_is==='Ejecutado'?'Voló más que lo publicado':
+    cur.more_is==='Publicado'?'Publicado mayor que ejecutado':
+    cur.more_is==='Igual'?'Ejecutado ≈ Publicado':'Sin datos';
 
   $('kpi-row').innerHTML=
-    kpiCard('Piloto',pname,rl,'#fff','👤')+
-    kpiCard('Horas Ejecutadas',fmtH(cur.exe_hrs),`Publicado: ${fmtH(cur.pub_hrs)}`,C.green,'✈')+
-    kpiCard('Sectores',fmtN(cur.sectors),'vuelos ejecutados',C.yellow,'🛫')+
-    kpiCard('Diferencia Ejec−Pub',fmtD(diff),diffLabel,diffColor(diff),'📊')+
-    kpiCard('Ausencias',`${cur.sick||0}d sick · ${cur.vac||0}d vac`,'días registrados',C.orange,'🏥');
+    kpiCard('Piloto', pname, `${fl} · ${rl}`, C.navy,'👤')+
+    kpiCard('Horas Ejecutadas', fmtH(cur.exe_hrs), `Publicado: ${fmtH(cur.pub_hrs)}`, C.green,'✈')+
+    kpiCard('Sectores', fmtN(cur.sectors), 'vuelos ejecutados', C.orange,'🛫')+
+    kpiCard('Diferencia Ejec−Pub', fmtD(diff), diffLbl, diffColor(diff),'📊')+
+    kpiCard('Ausencias', `${cur.sick||0}d enferm. · ${cur.vac||0}d vac.`, 'días registrados', C.purple,'🏥');
 
-  const cnt=$('content');cnt.innerHTML='';
+  const cnt=$('content'); cnt.innerHTML='';
 
-  const r1=el('div','row2');cnt.appendChild(r1);
+  const r1=el('div','row2'); cnt.appendChild(r1);
   r1.appendChild(chartDiv('ch-cmp'));
-  r1.appendChild(chartDiv('ch-diff-box'));
+  r1.appendChild(chartDiv('ch-diff-group'));
 
-  const r2=el('div','row1');cnt.appendChild(r2);
+  const r2=el('div','row1'); cnt.appendChild(r2);
   r2.appendChild(chartDiv('ch-act',360));
 
-  const r3=el('div','row1');cnt.appendChild(r3);
-  r3.appendChild(chartDiv('ch-trh',300));
+  const r3=el('div','row1'); cnt.appendChild(r3);
+  r3.appendChild(chartDiv('ch-trh',310));
 
-  const r4=el('div','row1');cnt.appendChild(r4);
-  r4.appendChild(chartDiv('ch-trd',300));
+  const r4=el('div','row1'); cnt.appendChild(r4);
+  r4.appendChild(chartDiv('ch-trd',310));
 
-  const r5=el('div','row1');cnt.appendChild(r5);
+  const r5=el('div','row1'); cnt.appendChild(r5);
   r5.appendChild(chartDiv('ch-pct',300));
 
-  /* 1 – Compare bars: pilot vs peers */
-  const pilotVals=[cur.exe_hrs||0,cur.sectors||0,cur.days_fly||0];
-  const peerVals=[peers.avg_exe_hrs||0,peers.avg_sectors||0,peers.avg_days_fly||0];
+  /* 1 – Compare bars */
   Plotly.newPlot('ch-cmp',[
-    {type:'bar',name:`Prom. ${rl}`,
-     x:['Horas Ejecutadas','Sectores','Días con vuelo'],y:peerVals,
-     marker:{color:C.border,opacity:.75},
+    {type:'bar', name:`Prom. ${fl} · ${rl}`,
+     x:['Horas Ejecutadas','Sectores','Días con vuelo'],
+     y:[peers.avg_exe_hrs||0, peers.avg_sectors||0, peers.avg_days_fly||0],
+     marker:{color:'rgba(26,20,100,.12)', line:{color:C.border,width:1.5}},
      hovertemplate:'<b>%{x}</b><br>Promedio: %{y:.1f}<extra></extra>'},
-    {type:'bar',name:pname.split(' ')[0],
-     x:['Horas Ejecutadas','Sectores','Días con vuelo'],y:pilotVals,
-     marker:{color:C.red},
+    {type:'bar', name:fname,
+     x:['Horas Ejecutadas','Sectores','Días con vuelo'],
+     y:[cur.exe_hrs||0, cur.sectors||0, cur.days_fly||0],
+     marker:{color:C.red, line:{color:'#fff',width:1.5}},
      hovertemplate:'<b>%{x}</b><br>Piloto: %{y:.1f}<extra></extra>'}
   ],lay({
-    title:{text:`${pname.split(' ')[0]} vs Prom. ${rl} – ${pf}`,font:{size:13,color:C.text}},
-    barmode:'group',bargap:.3,showlegend:true
+    title:{text:`${fname} vs Prom. ${fl} · ${rl} · ${pf}`,font:{size:12.5,color:C.text}},
+    barmode:'group', bargap:.3, showlegend:true
   }),CFG);
 
-  /* 2 – Diff distribution: pilot marker on peers' diff histogram */
+  /* 2 – Diff distribution with pilot marker */
   const diffDist=peers.diff_dist||[];
-  // Build histogram manually
-  const nBins=25;
-  let dMin=Math.min(...diffDist,diff||0),dMax=Math.max(...diffDist,diff||0);
+  const nB=25;
+  let dMin=diffDist.length?Math.min(...diffDist):−20;
+  let dMax=diffDist.length?Math.max(...diffDist):20;
+  if(diff!==null&&diff!==undefined){dMin=Math.min(dMin,diff);dMax=Math.max(dMax,diff);}
   if(dMin===dMax){dMin-=1;dMax+=1;}
-  const bSz=(dMax-dMin)/nBins;
-  const binCts=new Array(nBins).fill(0);
-  const binEdges=Array.from({length:nBins},(_,i)=>+(dMin+i*bSz).toFixed(2));
-  diffDist.forEach(v=>{
-    const bi=Math.min(Math.floor((v-dMin)/bSz),nBins-1);
-    if(bi>=0)binCts[bi]++;
-  });
-  const binColors=binEdges.map(e=>e>0.5?'rgba(0,212,170,.45)':e<-0.5?'rgba(232,0,45,.4)':'rgba(255,209,102,.35)');
+  const bSz=(dMax-dMin)/nB;
+  const bCts=new Array(nB).fill(0);
+  const bEdges=Array.from({length:nB},(_,i)=>+(dMin+i*bSz).toFixed(2));
+  diffDist.forEach(v=>{const bi=Math.min(Math.floor((v-dMin)/bSz),nB-1);if(bi>=0)bCts[bi]++;});
 
-  const diffTraces=[{
-    type:'bar',x:binEdges,y:binCts,width:Array(nBins).fill(bSz*.9),
-    marker:{color:binColors},
+  const diffT=[{
+    type:'bar', x:bEdges, y:bCts, width:Array(nB).fill(bSz*.88),
+    marker:{color:bEdges.map(e=>e>0.5?'rgba(11,143,114,.4)':e<-0.5?'rgba(208,2,27,.35)':'rgba(196,123,0,.35)'),
+            line:{color:'transparent'}},
     hovertemplate:'<b>Dif: %{x:+.1f} h</b><br>%{y} pilotos<extra></extra>',
-    name:`${rl}`
+    name:`${fl} · ${rl}`
   }];
   if(diff!==null&&diff!==undefined){
-    diffTraces.push({
-      type:'scatter',mode:'markers',
-      x:[diff],y:[0],
-      marker:{color:diffColor(diff),size:16,symbol:'diamond',
-        line:{color:'#fff',width:2}},
-      name:pname.split(' ')[0],
-      hovertemplate:`<b>${pname.split(' ')[0]}</b><br>Dif: ${fmtD(diff)}<extra></extra>`
+    diffT.push({
+      type:'scatter', mode:'markers',
+      x:[diff], y:[0],
+      marker:{color:diffColor(diff), size:16, symbol:'diamond',
+        line:{color:'#fff', width:2}},
+      name:fname,
+      hovertemplate:`<b>${fname}</b><br>Diferencia: ${fmtD(diff)}<extra></extra>`
     });
   }
-  Plotly.newPlot('ch-diff-box',diffTraces,lay({
-    title:{text:`Distribución Diferencia Ejec−Pub – ${pf}`,font:{size:13,color:C.text}},
-    xaxis:{...lay().xaxis,title:'Diferencia en horas (+ ejecutado mayor)'},
-    yaxis:{...lay().yaxis,title:'Nº Pilotos'},
+  Plotly.newPlot('ch-diff-group', diffT, lay({
+    title:{text:`Distribución Diferencia Ejec−Pub · ${fl} · ${rl} · ${pf}`,font:{size:12.5,color:C.text}},
+    xaxis:{...lay().xaxis, title:'Diferencia en horas (+ ejecutado mayor)'},
+    yaxis:{...lay().yaxis, title:'Nº Pilotos'},
     shapes:[{type:'line',x0:0,x1:0,y0:0,y1:1,yref:'paper',
-      line:{color:C.yellow,width:1.5,dash:'dot'}}],
+      line:{color:C.text3,width:1.5,dash:'dot'}}],
     showlegend:true
   }),CFG);
 
   /* 3 – Activities double pie */
   const actKeys=['Vuelos','Días Libre','Vacaciones','L. Médica','Simulador',
                  'Turno Apto.','Turno Dom.','Entrenamiento','OOF'];
-  const actPilot=[cur.sectors||0,cur.day_off||0,cur.vac||0,cur.sick||0,
-                  cur.sim||0,cur.asb||0,cur.hsb||0,cur.ground||0,cur.oof||0];
+  const actP=[cur.sectors||0,cur.day_off||0,cur.vac||0,cur.sick||0,
+              cur.sim||0,cur.asb||0,cur.hsb||0,cur.ground||0,cur.oof||0];
   const actPeer=[peers.avg_sectors||0,peers.avg_day_off||0,peers.avg_vac||0,
                  peers.avg_sick||0,peers.avg_sim||0,peers.avg_asb||0,
                  peers.avg_hsb||0,peers.avg_ground||0,peers.avg_oof||0];
   Plotly.newPlot('ch-act',[
-    {type:'pie',labels:actKeys,values:actPilot,hole:.4,domain:{x:[0,.46]},
-     marker:{colors:PIE_COLORS},textinfo:'percent',name:pname.split(' ')[0],
-     title:{text:pname.split(' ')[0],font:{color:C.text2,size:11}},
+    {type:'pie', labels:actKeys, values:actP, hole:.4, domain:{x:[0,.46]},
+     marker:{colors:PIE_COLORS, line:{color:'#fff',width:1.5}},
+     textinfo:'percent', name:fname,
+     title:{text:fname, font:{color:C.text2,size:12}},
      hovertemplate:'<b>%{label}</b><br>%{value:.0f}<br>%{percent}<extra></extra>'},
-    {type:'pie',labels:actKeys,values:actPeer,hole:.4,domain:{x:[.54,1]},
-     marker:{colors:PIE_COLORS},textinfo:'percent',name:`Prom. ${rl}`,
-     title:{text:`Prom. ${rl}`,font:{color:C.text2,size:11}},
+    {type:'pie', labels:actKeys, values:actPeer, hole:.4, domain:{x:[.54,1]},
+     marker:{colors:PIE_COLORS, line:{color:'#fff',width:1.5}},
+     textinfo:'percent', name:`Prom. ${fl}·${rl}`,
+     title:{text:`Prom. ${fl}·${rl}`, font:{color:C.text2,size:12}},
      hovertemplate:'<b>%{label}</b><br>Prom: %{value:.1f}<br>%{percent}<extra></extra>'}
   ],lay({
-    title:{text:`Actividades – ${pname.split(' ')[0]} vs Prom. ${rl} – ${pf}`,font:{size:13,color:C.text}},
-    showlegend:true,margin:{l:10,r:10,t:44,b:40},
-    legend:{bgcolor:'rgba(0,0,0,0)',font:{color:C.text2,size:10},orientation:'h',y:-0.06}
+    title:{text:`Actividades · ${fname} vs Prom. · ${pf}`,font:{size:12.5,color:C.text}},
+    showlegend:true, margin:{l:10,r:10,t:44,b:40},
+    legend:{...lay().legend, orientation:'h', y:-0.06, font:{size:10}}
   }),CFG);
 
-  /* 4 – Trend: pilot exe hours vs peer avg exe + pub */
-  const pilotExeHrs=chron.map(p=>{const v=pd.history[p]?.exe_hrs;return v!==null&&v!==undefined?v:null;});
-  const pilotPubHrs=chron.map(p=>{const v=pd.history[p]?.pub_hrs;return v!==null&&v!==undefined?v:null;});
-  const peerExeHrs=chron.map(p=>{const i=pt.periods.indexOf(p);return i>=0?pt.avg_exe[i]:null;});
-  const peerPubHrs=chron.map(p=>{const i=pt.periods.indexOf(p);return i>=0?pt.avg_pub[i]:null;});
+  /* 4 – Trend: pilot exe+pub vs peer averages */
+  const pExe=chron.map(p=>{const v=pd.history[p]?.exe_hrs;return(v!==null&&v!==undefined)?v:null;});
+  const pPub=chron.map(p=>{const v=pd.history[p]?.pub_hrs;return(v!==null&&v!==undefined)?v:null;});
+  const grExe=chron.map(p=>{const i=pt.periods.indexOf(p);return i>=0?pt.avg_exe[i]:null;});
+  const grPub=chron.map(p=>{const i=pt.periods.indexOf(p);return i>=0?pt.avg_pub[i]:null;});
 
   Plotly.newPlot('ch-trh',[
-    {type:'scatter',mode:'lines',x:fchron,y:peerPubHrs,name:`Pub prom.`,connectgaps:true,
-     line:{color:'rgba(61,59,175,.6)',width:1.5,dash:'dot'},
-     hovertemplate:'<b>%{x}</b><br>Pub prom: %{y:.1f} h<extra></extra>'},
-    {type:'scatter',mode:'lines',x:fchron,y:peerExeHrs,name:`Ejec prom.`,connectgaps:true,
-     line:{color:C.border,width:2,dash:'dash'},
-     hovertemplate:'<b>%{x}</b><br>Ejec prom: %{y:.1f} h<extra></extra>'},
-    {type:'scatter',mode:'lines+markers',x:fchron,y:pilotPubHrs,name:'Publicado',connectgaps:true,
-     line:{color:C.navyll,width:2},marker:{size:7,symbol:'circle-open'},
+    {type:'scatter',mode:'lines',x:fchron,y:grPub,name:'Pub. prom.',connectgaps:true,
+     line:{color:'rgba(61,59,175,.5)',width:1.5,dash:'dot'},
+     hovertemplate:'<b>%{x}</b><br>Pub. prom: %{y:.1f} h<extra></extra>'},
+    {type:'scatter',mode:'lines',x:fchron,y:grExe,name:'Ejec. prom.',connectgaps:true,
+     line:{color:'rgba(26,20,100,.3)',width:2,dash:'dash'},
+     hovertemplate:'<b>%{x}</b><br>Ejec. prom: %{y:.1f} h<extra></extra>'},
+    {type:'scatter',mode:'lines+markers',x:fchron,y:pPub,name:'Publicado',connectgaps:true,
+     line:{color:C.navyll,width:2},marker:{size:7,symbol:'circle-open',line:{width:2}},
      hovertemplate:'<b>%{x}</b><br>Pub: %{y:.1f} h<extra></extra>'},
-    {type:'scatter',mode:'lines+markers',x:fchron,y:pilotExeHrs,name:'Ejecutado',connectgaps:true,
-     line:{color:C.red,width:2.5},marker:{size:9},
+    {type:'scatter',mode:'lines+markers',x:fchron,y:pExe,name:'Ejecutado',connectgaps:true,
+     line:{color:C.red,width:2.5},marker:{size:9,line:{color:'#fff',width:2}},
      hovertemplate:'<b>%{x}</b><br>Ejec: %{y:.1f} h<extra></extra>'}
   ],lay({
-    title:{text:`Ejecutado vs Publicado – ${pname.split(' ')[0]}`,font:{size:13,color:C.text}},
+    title:{text:`Ejecutado vs Publicado · ${fname}`,font:{size:12.5,color:C.text}},
     yaxis:{...lay().yaxis,title:'Horas Bloque'},
     hovermode:'x unified',
     shapes:[{type:'line',x0:pf,x1:pf,y0:0,y1:1,yref:'paper',
-      line:{color:C.yellow,width:1.5,dash:'dash'}}]
+      line:{color:C.navy,width:1.5,dash:'dash'}}],
+    annotations:[{x:pf,y:1,yref:'paper',text:'Seleccionado',
+      font:{color:C.navy,size:10},showarrow:false,yanchor:'bottom',xanchor:'center'}]
   }),CFG);
 
-  /* 5 – Trend: difference history */
-  const pilotDiff=chron.map(p=>{const v=pd.history[p]?.diff_hrs;return v!==null&&v!==undefined?v:null;});
-  const peerDiff=chron.map(p=>{const i=pt.periods.indexOf(p);return i>=0?pt.avg_diff[i]:null;});
-  const diffBarColors=pilotDiff.map(v=>v===null?C.border:v>0.5?'rgba(0,212,170,.5)':v<-0.5?'rgba(232,0,45,.5)':'rgba(255,209,102,.4)');
+  /* 5 – Diff history bars */
+  const pDiff=chron.map(p=>{const v=pd.history[p]?.diff_hrs;return(v!==null&&v!==undefined)?v:null;});
+  const grDiff=chron.map(p=>{const i=pt.periods.indexOf(p);return i>=0?pt.avg_diff[i]:null;});
 
   Plotly.newPlot('ch-trd',[
-    {type:'scatter',mode:'lines',x:fchron,y:peerDiff,name:`Dif prom. ${rl}`,connectgaps:true,
-     line:{color:C.border,width:2,dash:'dot'},
-     hovertemplate:'<b>%{x}</b><br>Dif prom: %{y:+.1f} h<extra></extra>'},
-    {type:'bar',x:fchron,y:pilotDiff,name:'Dif piloto',
-     marker:{color:diffBarColors},
+    {type:'scatter',mode:'lines',x:fchron,y:grDiff,name:`Dif. prom. ${fl}·${rl}`,connectgaps:true,
+     line:{color:'rgba(26,20,100,.35)',width:2,dash:'dot'},
+     hovertemplate:'<b>%{x}</b><br>Dif. prom: %{y:+.1f} h<extra></extra>'},
+    {type:'bar',x:fchron,y:pDiff,name:'Diferencia piloto',
+     marker:{color:pDiff.map(v=>v===null?'transparent':v>0.5?'rgba(11,143,114,.55)':v<-0.5?'rgba(208,2,27,.5)':'rgba(196,123,0,.5)'),
+             line:{color:'transparent'}},
      hovertemplate:'<b>%{x}</b><br>Diferencia: %{y:+.1f} h<extra></extra>'}
   ],lay({
-    title:{text:`Diferencia Ejec−Pub por Mes – ${pname.split(' ')[0]}`,font:{size:13,color:C.text}},
+    title:{text:`Diferencia Ejec−Pub por Mes · ${fname}`,font:{size:12.5,color:C.text}},
     yaxis:{...lay().yaxis,title:'Diferencia (h)'},
     hovermode:'x unified',
     shapes:[
-      {type:'line',x0:0,x1:1,y0:0,y1:0,xref:'paper',line:{color:C.yellow,width:1.5,dash:'dot'}},
-      {type:'line',x0:pf,x1:pf,y0:0,y1:1,yref:'paper',line:{color:C.yellow,width:1.5,dash:'dash'}}
+      {type:'line',x0:0,x1:1,y0:0,y1:0,xref:'paper',line:{color:C.text3,width:1,dash:'dot'}},
+      {type:'line',x0:pf,x1:pf,y0:0,y1:1,yref:'paper',line:{color:C.navy,width:1.5,dash:'dash'}}
     ]
   }),CFG);
 
   /* 6 – Percentile */
   const hrsDist=peers.hrs_dist||[];
-  const pHrs=cur.exe_hrs||0;
-  const pctile=hrsDist.length>0?Math.round(hrsDist.filter(v=>v<pHrs).length/hrsDist.length*100):0;
-  const nB2=25;
-  const hMin2=hrsDist.length>0?Math.min(...hrsDist):0;
-  const hMax2=hrsDist.length>0?Math.max(...hrsDist):100;
-  const bSz2=(hMax2-hMin2)/nB2||1;
+  const pH=cur.exe_hrs||0;
+  const pctile=hrsDist.length>0?Math.round(hrsDist.filter(v=>v<pH).length/hrsDist.length*100):0;
+  const nB2=25,hMin=hrsDist.length?Math.min(...hrsDist):0,hMax=hrsDist.length?Math.max(...hrsDist):100;
+  const bSz2=(hMax-hMin)/nB2||1;
   const bCts2=new Array(nB2).fill(0);
-  const bEdges2=Array.from({length:nB2},(_,i)=>+(hMin2+i*bSz2).toFixed(2));
-  hrsDist.forEach(v=>{const bi=Math.min(Math.floor((v-hMin2)/bSz2),nB2-1);if(bi>=0)bCts2[bi]++;});
+  const bEdges2=Array.from({length:nB2},(_,i)=>+(hMin+i*bSz2).toFixed(2));
+  hrsDist.forEach(v=>{const bi=Math.min(Math.floor((v-hMin)/bSz2),nB2-1);if(bi>=0)bCts2[bi]++;});
 
   Plotly.newPlot('ch-pct',[{
-    type:'bar',x:bEdges2,y:bCts2,width:Array(nB2).fill(bSz2*.9),
-    marker:{color:C.border,opacity:.7},
+    type:'bar', x:bEdges2, y:bCts2, width:Array(nB2).fill(bSz2*.88),
+    marker:{color:'rgba(26,20,100,.12)', line:{color:C.border,width:1}},
     hovertemplate:'<b>%{x:.0f} h</b><br>%{y} pilotos<extra></extra>',
-    name:`${rl}`
+    name:`${fl} · ${rl}`
   }],lay({
-    title:{text:`Posición en el Grupo – ${pname.split(' ')[0]} – ${pf}`,font:{size:13,color:C.text}},
+    title:{text:`Posición en el Grupo · ${fname} · ${pf}`,font:{size:12.5,color:C.text}},
     xaxis:{...lay().xaxis,title:'Horas Bloque Ejecutadas'},
     yaxis:{...lay().yaxis,title:'Nº Pilotos'},
-    shapes:[{type:'line',x0:pHrs,x1:pHrs,y0:0,y1:1,yref:'paper',
+    shapes:[{type:'line',x0:pH,x1:pH,y0:0,y1:1,yref:'paper',
       line:{color:C.red,width:3}}],
-    annotations:[{x:pHrs,y:1,yref:'paper',
-      text:`${pname.split(' ')[0]}: ${pHrs.toFixed(0)}h · Percentil ${pctile}`,
-      font:{color:C.red,size:12},showarrow:false,yanchor:'bottom'}]
+    annotations:[{x:pH,y:1,yref:'paper',
+      text:`${fname}: ${pH.toFixed(0)} h · Percentil ${pctile}`,
+      font:{color:C.red,size:12,weight:'bold'},showarrow:false,
+      yanchor:'bottom',xanchor:'center'}]
   }),CFG);
 }
 
