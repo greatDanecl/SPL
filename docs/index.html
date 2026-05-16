@@ -472,8 +472,8 @@ function renderOverview(){
     hovertemplate:'<b>Diferencia: %{x:+.1f} h</b><br>%{y} pilotos<extra></extra>',
     name:'Diferencia'
   }],lay({
-    title:{text:`Diferencia Ejec−Pub · ${fl} · ${rl} · ${pf}`,font:{size:12.5,color:C.text}},
-    xaxis:{...lay().xaxis, title:'Horas (+ = más ejecutado, − = más publicado)'},
+    title:{text:`Diferencia Ejec-Pub · ${fl} · ${rl} · ${pf}`,font:{size:12.5,color:C.text}},
+    xaxis:{...lay().xaxis, title:'Horas (+ = más ejecutado, - = más publicado)'},
     yaxis:{...lay().yaxis, title:'Nº Pilotos'},
     shapes:[{type:'line',x0:0,x1:0,y0:0,y1:1,yref:'paper',
       line:{color:C.text2,width:1.5,dash:'dot'}}]
@@ -540,7 +540,7 @@ function renderOverview(){
      name:'Ejecutado prom.', line:{color:C.green, width:2.5},
      marker:{size:8, line:{color:'#fff',width:2}},
      hovertemplate:'<b>%{x}</b><br>Ejec: %{y:.1f} h<extra></extra>'},
-    {type:'bar', x:ftdp, y:tr.avg_diff, name:'Diferencia (Ejec−Pub)',
+    {type:'bar', x:ftdp, y:tr.avg_diff, name:'Diferencia (Ejec-Pub)',
      marker:{color:tr.avg_diff.map(v=>v>=0?'rgba(11,143,114,.35)':'rgba(208,2,27,.3)'),
              line:{color:'transparent'}},
      yaxis:'y2',
@@ -603,7 +603,7 @@ function renderPilot(){
     kpiCard('Piloto', pname, `${fl} · ${rl}`, C.navy,'👤')+
     kpiCard('Horas Ejecutadas', fmtH(cur.exe_hrs), `Publicado: ${fmtH(cur.pub_hrs)}`, C.green,'✈')+
     kpiCard('Sectores', fmtN(cur.sectors), 'vuelos ejecutados', C.orange,'🛫')+
-    kpiCard('Diferencia Ejec−Pub', fmtD(diff), diffLbl, diffColor(diff),'📊')+
+    kpiCard('Diferencia Ejec-Pub', fmtD(diff), diffLbl, diffColor(diff),'📊')+
     kpiCard('Ausencias', `${cur.sick||0}d enferm. · ${cur.vac||0}d vac.`, 'días registrados', C.purple,'🏥');
 
   const cnt=$('content'); cnt.innerHTML='';
@@ -644,7 +644,7 @@ function renderPilot(){
   /* 2 – Diff distribution with pilot marker */
   const diffDist=peers.diff_dist||[];
   const nB=25;
-  let dMin=diffDist.length?Math.min(...diffDist):−20;
+  let dMin=diffDist.length?Math.min(...diffDist):-20;
   let dMax=diffDist.length?Math.max(...diffDist):20;
   if(diff!==null&&diff!==undefined){dMin=Math.min(dMin,diff);dMax=Math.max(dMax,diff);}
   if(dMin===dMax){dMin-=1;dMax+=1;}
@@ -671,7 +671,7 @@ function renderPilot(){
     });
   }
   Plotly.newPlot('ch-diff-group', diffT, lay({
-    title:{text:`Distribución Diferencia Ejec−Pub · ${fl} · ${rl} · ${pf}`,font:{size:12.5,color:C.text}},
+    title:{text:`Distribución Diferencia Ejec-Pub · ${fl} · ${rl} · ${pf}`,font:{size:12.5,color:C.text}},
     xaxis:{...lay().xaxis, title:'Diferencia en horas (+ ejecutado mayor)'},
     yaxis:{...lay().yaxis, title:'Nº Pilotos'},
     shapes:[{type:'line',x0:0,x1:0,y0:0,y1:1,yref:'paper',
@@ -746,7 +746,7 @@ function renderPilot(){
              line:{color:'transparent'}},
      hovertemplate:'<b>%{x}</b><br>Diferencia: %{y:+.1f} h<extra></extra>'}
   ],lay({
-    title:{text:`Diferencia Ejec−Pub por Mes · ${fname}`,font:{size:12.5,color:C.text}},
+    title:{text:`Diferencia Ejec-Pub por Mes · ${fname}`,font:{size:12.5,color:C.text}},
     yaxis:{...lay().yaxis,title:'Diferencia (h)'},
     hovermode:'x unified',
     shapes:[
