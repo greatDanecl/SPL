@@ -274,6 +274,23 @@ def load_all_data() -> pd.DataFrame:
     # Ensure periodo aligns with str_dt month
     data["periodo"] = data["str_dt"].dt.to_period("M").astype(str)
 
+    # ── Assign fleet_type per pilot (Wide Body / Narrow Body) ──────────────
+    # Use the dominant non-null fleet value across ALL rows for each pilot,
+    # then broadcast back so every row (including non-flight nulls) gets a type.
+    def _dominant_fleet(series):
+        vals = series.dropna()
+        vals = vals[vals != ""]
+        if len(vals) == 0:
+            return None
+        mode_val = vals.mode()[0]
+        s = str(mode_val)
+        if "787" in s or "330" in s or "767" in s:
+            return "Wide Body (787)"
+        return "Narrow Body (32X)"
+
+    pilot_fleet_map = data.groupby("staff_num")["fleet"].apply(_dominant_fleet)
+    data["fleet_type"] = data["staff_num"].map(pilot_fleet_map)
+
     print(f"Total records loaded: {len(data)}")
     return data
 
@@ -313,6 +330,7 @@ def compute_monthly_kpis(data: pd.DataFrame) -> pd.DataFrame:
             "rol_type": rol,
             "rank": grp["rank"].iloc[0],
             "full_name": grp["full_name"].iloc[0],
+            "fleet_type": grp["fleet_type"].iloc[0] if "fleet_type" in grp.columns else None,
             "total_block_hours": round(total_block, 2),
             "flight_block_hours": round(flight_block, 2),
             "flight_sectors": flight_sectors,
@@ -334,7 +352,7 @@ def compute_monthly_kpis(data: pd.DataFrame) -> pd.DataFrame:
 def compute_adherence(kpis: pd.DataFrame) -> pd.DataFrame:
     """Compute adherence ratio (ejecutado / publicado) per worker per month."""
     pub = kpis[kpis["rol_type"] == "Publicado"][
-        ["staff_num", "periodo", "rank", "full_name",
+        ["staff_num", "periodo", "rank", "full_name", "fleet_type",
          "total_block_hours", "flight_block_hours", "flight_sectors",
          "prolonged_absence"]
     ].rename(columns={
