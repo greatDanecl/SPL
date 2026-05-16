@@ -1,0 +1,64 @@
+name: Build & Deploy SPL Dashboard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/**.xlsx'
+      - 'data/**.xls'
+      - 'docs/index.html'
+      - 'scripts/build_data.py'
+      - 'data_parser.py'
+  workflow_dispatch:   # permite lanzar manualmente desde GitHub
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ hashFiles('requirements.txt') }}
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build data.json
+        run: python scripts/build_data.py
+
+      - name: Copy logo to docs/
+        run: cp -n SPL_logo.png docs/ 2>/dev/null || true
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
