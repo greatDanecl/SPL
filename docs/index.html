@@ -229,7 +229,7 @@ function chartDiv(id,h){
 function fillPeriods(){
   var sp=$('sel-period');
   sp.innerHTML='';
-  D.periods_dropdown.forEach(function(p){
+  D.periods_chron.forEach(function(p){
     var o=document.createElement('option');
     var isPubOnly=D.periods_pub_only&&D.periods_pub_only.indexOf(p)>=0;
     o.value=p;
@@ -237,6 +237,9 @@ function fillPeriods(){
     if(isPubOnly){o.style.color='#C47B00';}
     sp.appendChild(o);
   });
+  // Default: período más reciente con ejecutado (no solo publicado)
+  sp.value = D.periods_exe[0];
+  S.period  = D.periods_exe[0];
 }
 
 function fillPilots(){
