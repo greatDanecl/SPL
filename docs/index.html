@@ -265,6 +265,7 @@ function showEmpty(){
 }
 
 function render(){
+  if(currentTab==='directiva'){renderDirectiva();return;}
   if(!S.fleet||!S.rank||!S.period){showEmpty();return;}
   if(S.pilot){renderPilot();}else{renderOverview();}
 }
@@ -656,7 +657,7 @@ function switchTab(tab){
     renderDirectiva();
   } else {
     ctrlBar.style.display='';
-    render();
+    if(!S.fleet||!S.rank||!S.period){showEmpty();}else{render();}
   }
 }
 
