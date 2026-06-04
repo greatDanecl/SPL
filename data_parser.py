@@ -346,6 +346,8 @@ def compute_monthly_kpis(data: pd.DataFrame) -> pd.DataFrame:
             "prolonged_absence": prolonged,
             "num_routes": len(unique_routes),
             "num_intl_routes": num_intl,
+            "block_per_fly_day": round(flight_block / days_worked, 2) if days_worked > 0 else None,
+            "legs_per_fly_day":  round(flight_sectors / days_worked, 2) if days_worked > 0 else None,
         })
     return pd.DataFrame(records)
 
