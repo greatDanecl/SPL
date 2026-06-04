@@ -9,7 +9,7 @@ from pathlib import Path
 import pandas as pd
 import numpy as np
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).parent.parent   # scripts/ -> repo root
 sys.path.insert(0, str(ROOT))
 
 from data_parser import load_all_data, compute_monthly_kpis, compute_adherence
