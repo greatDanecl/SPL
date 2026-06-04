@@ -371,6 +371,8 @@ function renderOverview(){
     (parseFloat(avgDiff)>0.5?'Ejecutado mayor que publicado':
     parseFloat(avgDiff)<-0.5?'Publicado mayor que ejecutado':'Practicamente iguales');
 
+  var peers=((D.peer_stats[rank]||{})[fleet]||{})[period]||{};
+
   $('kpi-row').innerHTML=
     kpiCard('Total Pilotos',ov.n_total,''+ov.n_active+' activos - '+fl+' - '+rl,C.navy,'&#9992;')+
     kpiCard('Horas Ejec. Prom.',fmtH(ov.avg_exe_hrs),'horas bloque ejecutadas',C.green,'&#9201;')+
@@ -378,9 +380,9 @@ function renderOverview(){
     kpiCard('Diferencia Prom.',fmtD(avgDiff),diffLbl,diffColor(avgDiff),'&#128202;')+
     kpiCard('Legs Prom.',fmtN(ov.avg_sectors&&Math.round(ov.avg_sectors)),'legs ejecutados',C.orange,'&#128747;')+
       (S.fleet==='Wide Body (787)'
-        ? kpiCard('Block h/día vuelo',fmtH(peer.avg_blk_day),'prom. días con vuelo',C.navy,'&#9201;')
-        : kpiCard('Legs/día vuelo',fmtN(peer.avg_legs_day)+' legs','días activos',C.orange,'&#9992;')+
-          kpiCard('Block h/día vuelo',fmtH(peer.avg_blk_day),'prom. días con vuelo',C.navyll,'&#9201;'));
+        ? kpiCard('Block h/día vuelo',fmtH(peers.avg_blk_day),'prom. días con vuelo',C.navy,'&#9201;')
+        : kpiCard('Legs/día vuelo',fmtN(peers.avg_legs_day)+' legs','días activos',C.orange,'&#9992;')+
+          kpiCard('Block h/día vuelo',fmtH(peers.avg_blk_day),'prom. días con vuelo',C.navyll,'&#9201;'));
 
   var cnt=$('content');cnt.innerHTML='';
   var r1=el('div','row2');cnt.appendChild(r1);
