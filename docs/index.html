@@ -392,6 +392,7 @@ function renderOverview(){
     kpiCard('Horas Pub. Prom.',fmtH(ov.avg_pub_hrs),'horas bloque publicadas',C.navyll,'&#128203;')+
     kpiCard('Diferencia Prom.',fmtD(avgDiff),diffLbl,diffColor(avgDiff),'&#128202;')+
     kpiCard('Legs Prom.',fmtN(ov.avg_sectors&&Math.round(ov.avg_sectors)),'legs ejecutados',C.orange,'&#128747;')+
+      kpiCard('Días con vuelo',fmtN(peers.avg_days_fly),'prom. días fly '+fmtP(period),C.green,'&#128197;')+
       (S.fleet==='Wide Body (787)'
         ? kpiCard('Block h/día vuelo',fmtH(peers.avg_blk_day),fmtP(period),C.navy,'&#9201;')+
           kpiCard('Block h/día YTD',fmtH(ytdBlkDay),ytdLbl,C.navyll,'&#128200;')
