@@ -71,14 +71,20 @@ adh["more_is"] = np.where(
     np.where(adh["diff_hrs"] < -0.5, "Publicado", "Igual")
 )
 
-# Períodos con ejecutado (base del dashboard)
+# Períodos con ejecutado — solo incluir si tiene >= 50 pilotos activos
+# (evita overflow de días de fin de mes del archivo siguiente)
+all_exe_periods = kpis[kpis["rol_type"]=="Ejecutado"]["periodo"].dropna().unique()
+exe_pilot_counts = kpis[kpis["rol_type"]=="Ejecutado"].groupby("periodo")["staff_num"].nunique()
+pub_periods_set = set(kpis[kpis["rol_type"]=="Publicado"]["periodo"].dropna().unique())
 periods_exe = sorted(
-    kpis[kpis["rol_type"]=="Ejecutado"]["periodo"].dropna().unique(), reverse=True
+    [p for p in all_exe_periods
+     if exe_pilot_counts.get(p, 0) >= 50 and p in pub_periods_set],
+    reverse=True
 )
 # Períodos SOLO publicado (sin ejecutado aún – ej. Mayo 2026)
+all_pub_periods = kpis[kpis["rol_type"]=="Publicado"]["periodo"].dropna().unique()
 periods_pub_only = sorted([
-    p for p in kpis[kpis["rol_type"]=="Publicado"]["periodo"].dropna().unique()
-    if p not in periods_exe
+    p for p in all_pub_periods if p not in periods_exe
 ], reverse=True)
 
 # Lista completa para el dropdown (ejecutados primero, luego pub-only)
@@ -257,6 +263,8 @@ for rank in RANKS:
                 "avg_sim":sm(pe["sim_days"]),              "avg_asb":sm(pe["asb_days"]),
                 "avg_hsb":sm(pe["hsb_days"]),              "avg_ground":sm(pe["ground_days"]),
                 "avg_oof":sm(pe["oof_days"]),
+                "avg_blk_day":round(float(pe["block_per_fly_day"].mean()),2) if pe["block_per_fly_day"].notna().any() else 0.0,
+                "avg_legs_day":round(float(pe["legs_per_fly_day"].mean()),2) if pe["legs_per_fly_day"].notna().any() else 0.0,
                 "hrs_dist":[round(float(v),2) for v in pe["flight_block_hours"].dropna()],
                 "diff_dist":[round(float(v),2) for v in pa["diff_hrs"].dropna()],
             }
