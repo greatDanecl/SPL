@@ -37,13 +37,12 @@ header{display:flex;align-items:center;justify-content:space-between;padding:0 2
   border-bottom:1px solid var(--border);flex-wrap:wrap;align-items:flex-end;box-shadow:var(--sh1)}
 .ctrl-grp{display:flex;flex-direction:column;gap:4px;min-width:160px}
 .ctrl-grp.wide{flex:1;min-width:200px}
-.ctrl-grp.btn-grp{justify-content:flex-end;min-width:auto;align-self:flex-end}
-.btn-clear{background:transparent;color:var(--text2);border:1px solid var(--border2);
-  border-radius:8px;padding:7px 14px;font-size:.82rem;font-family:var(--font);
-  cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;
-  transition:background .15s,color .15s,border-color .15s}
-
-.btn-clear:hover{background:var(--red-xl,#FFE5E8);color:var(--red);border-color:var(--red)}
+.ctrl-grp.btn-grp{flex-direction:row;gap:6px;align-self:flex-end;min-width:auto;margin-left:auto;padding-bottom:1px}
+.btn-icon{width:36px;height:36px;font-size:1.1rem;cursor:pointer;display:flex;
+  align-items:center;justify-content:center;border-radius:8px;flex-shrink:0;
+  background:transparent;border:1px solid var(--border2);color:var(--text2);
+  transition:background .15s,color .15s,border-color .15s;font-family:var(--font)}
+.btn-clear:hover{background:#FFF0F1;color:var(--red);border-color:var(--red)}
 /* ── Tabs ─────────────────────────────────────────────────────────── */
 .tab-bar{display:flex;gap:0;background:#fff;border-bottom:2px solid var(--border);
   padding:0 28px;box-shadow:0 1px 4px rgba(26,20,100,.06)}
@@ -107,10 +106,6 @@ footer{padding:8px 28px;font-size:.68rem;color:var(--text3);
   .kpi,.ctrl-grp,.ctrl-grp.wide{min-width:100%}}
 
 /* ── Print / PDF export ───────────────────────────────────────────────── */
-.btn-pdf{background:transparent;color:var(--text2);border:1px solid var(--border2);
-  border-radius:8px;padding:7px 14px;font-size:.82rem;font-family:var(--font);
-  cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;
-  transition:background .15s,color .15s,border-color .15s;margin-left:6px}
 .btn-pdf:hover{background:#EEF0FF;color:var(--navy);border-color:var(--navy)}
 @media print{
   .ctrl-bar,.tab-bar,#btn-pdf,#btn-clear,.hdr-right{display:none!important}
@@ -168,13 +163,8 @@ footer{padding:8px 28px;font-size:.68rem;color:var(--text3);
     </select>
   </div>
   <div class="ctrl-grp btn-grp">
-    <span class="ctrl-label">&nbsp;</span>
-    <button id="btn-clear" class="btn-clear" title="Limpiar todos los filtros">
-      &#10005; Limpiar
-    </button>
-    <button id="btn-pdf" class="btn-pdf" title="Exportar a PDF">
-      &#128438; Exportar PDF
-    </button>
+    <button id="btn-clear" class="btn-icon btn-clear" title="Limpiar filtros">&#10005;</button>
+    <button id="btn-pdf"   class="btn-icon btn-pdf"   title="Exportar PDF"   >&#128438;</button>
   </div>
 </div>
 <!-- Tabs -->
@@ -348,11 +338,11 @@ function boot(){
   $('btn-pdf').addEventListener('click',function(){
     // Give Plotly charts a moment to finish any pending renders
     var btn=$('btn-pdf');
-    btn.textContent='&#9203; Preparando...';
+    btn.innerHTML='&#9203;';
     btn.disabled=true;
     setTimeout(function(){
       window.print();
-      btn.innerHTML='&#128438; Exportar PDF';
+      btn.innerHTML='&#128438;';
       btn.disabled=false;
     }, 400);
   });
