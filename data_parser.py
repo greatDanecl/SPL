@@ -172,9 +172,11 @@ def _norm_old_format(df, rol_type, source_file):
     df = df.rename(columns={k: v for k, v in rename.items() if k in df.columns})
     df["staff_num"] = df["staff_num"].astype(str).str.strip().str.lstrip("0")
     df["str_dt"] = df["str_dt"].apply(parse_date)
-    if "first_name" in df.columns and "last_name" in df.columns:
+    if "Nombre completo" in df.columns:
+        df["full_name"] = df["Nombre completo"].fillna("").str.strip()
+    elif "first_name" in df.columns and "last_name" in df.columns:
         df["full_name"] = (df["last_name"].fillna("") + " " + df["first_name"].fillna("")).str.strip()
-    elif "full_name" not in df.columns:
+    if "full_name" not in df.columns or df["full_name"].eq("").all():
         df["full_name"] = df["staff_num"]
     df["block_hours"] = df["block_time"].apply(block_time_to_hours)
     df["rol_type"] = rol_type
