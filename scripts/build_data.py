@@ -63,6 +63,25 @@ adh  = adh[adh["rank"].isin(RANKS)].copy()
 kpis = kpis[kpis["rank"].isin(RANKS)].copy()
 
 fleet_map = kpis.drop_duplicates("staff_num").set_index("staff_num")["fleet_type"].to_dict()
+
+# Build canonical name map: prefer APELLIDO-first sources over NOMBRE-first
+# "202512_publicado" has Nombre completo in NOMBRE-APELLIDO order (inverted)
+# All other sources use APELLIDO-NOMBRE → canonical
+INVERTED_NAME_SOURCES = {"202512_publicado"}
+canon_names = {}
+# First pass: collect names from reliable (apellido-first) sources
+for _, row in raw[raw["source_file"].isin(INVERTED_NAME_SOURCES) == False].drop_duplicates(["staff_num","full_name"]).iterrows():
+    pid = row["staff_num"]
+    name = str(row["full_name"]).strip()
+    if name and name != pid and pid not in canon_names:
+        canon_names[pid] = name
+# Second pass: fill missing with inverted-source names (flip word order heuristic)
+for _, row in raw[raw["source_file"].isin(INVERTED_NAME_SOURCES)].drop_duplicates("staff_num").iterrows():
+    pid = row["staff_num"]
+    if pid not in canon_names:
+        name = str(row["full_name"]).strip()
+        if name and name != pid:
+            canon_names[pid] = name  # no canonical available, use as-is
 adh["fleet_type"] = adh["staff_num"].map(fleet_map)
 
 adh["diff_hrs"] = (adh["exe_flight_hours"].fillna(0) - adh["pub_flight_hours"].fillna(0)).round(2)
@@ -241,15 +260,15 @@ for rank in RANKS:
     pilots[rank] = {}
     for ft in FLEET_TYPES:
         sub = adh[(adh["rank"]==rank) & (adh["fleet_type"]==ft)].copy()
-        # Prefer rows where full_name is a real name (not equal to staff_num)
-        sub["_has_name"] = sub["full_name"].notna() & (sub["full_name"] != sub["staff_num"].astype(str))
-        sub = sub.sort_values("_has_name", ascending=False)
-        names = sub.drop_duplicates("staff_num")[["staff_num","full_name"]]
-        names = names[names["full_name"].notna()].sort_values("full_name")
-        pilots[rank][ft] = [
-            {"id": str(r["staff_num"]), "name": str(r["full_name"]).strip().title()}
-            for _, r in names.iterrows()
-        ]
+        pids = sub["staff_num"].dropna().unique()
+        pilot_names = []
+        for pid in pids:
+            name = canon_names.get(str(pid), str(pid))
+            if name != str(pid):
+                pilot_names.append({"id": str(pid), "name": name.strip().title()})
+        # Sort by apellido (first word of canonical APELLIDO-first name)
+        pilot_names.sort(key=lambda p: p["name"].upper())
+        pilots[rank][ft] = pilot_names
 
 peer_stats = {}
 for rank in RANKS:
