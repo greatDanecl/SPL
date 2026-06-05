@@ -240,8 +240,12 @@ pilots = {}
 for rank in RANKS:
     pilots[rank] = {}
     for ft in FLEET_TYPES:
-        sub = adh[(adh["rank"]==rank) & (adh["fleet_type"]==ft)].dropna(subset=["full_name"])
-        names = sub.drop_duplicates("staff_num")[["staff_num","full_name"]].sort_values("full_name")
+        sub = adh[(adh["rank"]==rank) & (adh["fleet_type"]==ft)].copy()
+        # Prefer rows where full_name is a real name (not equal to staff_num)
+        sub["_has_name"] = sub["full_name"].notna() & (sub["full_name"] != sub["staff_num"].astype(str))
+        sub = sub.sort_values("_has_name", ascending=False)
+        names = sub.drop_duplicates("staff_num")[["staff_num","full_name"]]
+        names = names[names["full_name"].notna()].sort_values("full_name")
         pilots[rank][ft] = [
             {"id": str(r["staff_num"]), "name": str(r["full_name"]).strip().title()}
             for _, r in names.iterrows()
