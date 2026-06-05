@@ -373,6 +373,19 @@ function renderOverview(){
 
   var peers=((D.peer_stats[rank]||{})[fleet]||{})[period]||{};
 
+  /* YTD productivity: average block_per_fly_day across all exe periods
+     in the same year up to (and including) the selected period */
+  var year=period.split('-')[0];
+  var ytdPeriods=D.periods_exe.filter(function(p){return p.startsWith(year)&&p<=period;});
+  var ytdBlkSum=0,ytdLegsSum=0,ytdN=0;
+  ytdPeriods.forEach(function(p){
+    var ps=((D.peer_stats[rank]||{})[fleet]||{})[p]||{};
+    if(ps.avg_blk_day){ytdBlkSum+=ps.avg_blk_day;ytdLegsSum+=(ps.avg_legs_day||0);ytdN++;}
+  });
+  var ytdBlkDay  = ytdN>0 ? Math.round(ytdBlkSum/ytdN*100)/100 : null;
+  var ytdLegsDay = ytdN>0 ? Math.round(ytdLegsSum/ytdN*100)/100 : null;
+  var ytdLbl     = ytdN>1 ? 'prom. YTD ('+ytdN+' meses)' : 'solo este mes';
+
   $('kpi-row').innerHTML=
     kpiCard('Total Pilotos',ov.n_total,''+ov.n_active+' activos - '+fl+' - '+rl,C.navy,'&#9992;')+
     kpiCard('Horas Ejec. Prom.',fmtH(ov.avg_exe_hrs),'horas bloque ejecutadas',C.green,'&#9201;')+
@@ -380,9 +393,12 @@ function renderOverview(){
     kpiCard('Diferencia Prom.',fmtD(avgDiff),diffLbl,diffColor(avgDiff),'&#128202;')+
     kpiCard('Legs Prom.',fmtN(ov.avg_sectors&&Math.round(ov.avg_sectors)),'legs ejecutados',C.orange,'&#128747;')+
       (S.fleet==='Wide Body (787)'
-        ? kpiCard('Block h/día vuelo',fmtH(peers.avg_blk_day),'prom. días con vuelo',C.navy,'&#9201;')
-        : kpiCard('Legs/día vuelo',fmtN(peers.avg_legs_day)+' legs','días activos',C.orange,'&#9992;')+
-          kpiCard('Block h/día vuelo',fmtH(peers.avg_blk_day),'prom. días con vuelo',C.navyll,'&#9201;'));
+        ? kpiCard('Block h/día vuelo',fmtH(peers.avg_blk_day),fmtP(period),C.navy,'&#9201;')+
+          kpiCard('Block h/día YTD',fmtH(ytdBlkDay),ytdLbl,C.navyll,'&#128200;')
+        : kpiCard('Legs/día vuelo',fmtN(peers.avg_legs_day)+' legs',fmtP(period),C.orange,'&#9992;')+
+          kpiCard('Legs/día YTD',fmtN(ytdLegsDay)+' legs',ytdLbl,C.orange,'&#128200;')+
+          kpiCard('Block h/día vuelo',fmtH(peers.avg_blk_day),fmtP(period),C.navyll,'&#9201;')+
+          kpiCard('Block h/día YTD',fmtH(ytdBlkDay),ytdLbl,C.navy,'&#128200;'));
 
   var cnt=$('content');cnt.innerHTML='';
   var r1=el('div','row2');cnt.appendChild(r1);
