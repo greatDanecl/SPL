@@ -152,9 +152,13 @@ footer{padding:8px 28px;font-size:.68rem;color:var(--text3);
       <option value="FO">Primer Oficial (FO)</option>
     </select>
   </div>
-  <div class="ctrl-grp">
-    <span class="ctrl-label">Periodo</span>
-    <select id="sel-period" disabled></select>
+  <div class="ctrl-grp" style="min-width:90px;max-width:100px">
+    <span class="ctrl-label">Año</span>
+    <select id="sel-year" disabled></select>
+  </div>
+  <div class="ctrl-grp" style="min-width:120px;max-width:140px">
+    <span class="ctrl-label">Mes</span>
+    <select id="sel-month" disabled></select>
   </div>
   <div class="ctrl-grp wide">
     <span class="ctrl-label">Piloto (opcional)</span>
@@ -236,20 +240,46 @@ function chartDiv(id,h){
   return d;
 }
 
-function fillPeriods(){
-  var sp=$('sel-period');
-  sp.innerHTML='';
+var MESES=['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+  'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+function fillYears(){
+  var sy=$('sel-year');
+  sy.innerHTML='';
+  var years=[];
   D.periods_chron.forEach(function(p){
-    var o=document.createElement('option');
-    var isPubOnly=D.periods_pub_only&&D.periods_pub_only.indexOf(p)>=0;
-    o.value=p;
-    o.textContent=fmtP(p)+(isPubOnly?' (solo publicado)':'');
-    if(isPubOnly){o.style.color='#C47B00';}
-    sp.appendChild(o);
+    var y=p.split('-')[0];
+    if(years.indexOf(y)<0) years.push(y);
   });
-  // Default: período más reciente con ejecutado (no solo publicado)
-  sp.value = D.periods_exe[0];
-  S.period  = D.periods_exe[0];
+  years.forEach(function(y){
+    var o=document.createElement('option');
+    o.value=y; o.textContent=y; sy.appendChild(o);
+  });
+}
+
+function fillMonths(year){
+  var sm=$('sel-month');
+  sm.innerHTML='';
+  var monthsInYear=D.periods_chron.filter(function(p){return p.startsWith(year);});
+  monthsInYear.forEach(function(p){
+    var mIdx=parseInt(p.split('-')[1],10)-1;
+    var isPubOnly=D.periods_pub_only&&D.periods_pub_only.indexOf(p)>=0;
+    var o=document.createElement('option');
+    o.value=p;
+    o.textContent=MESES[mIdx]+(isPubOnly?' *':'');
+    if(isPubOnly){o.style.color='#C47B00';}
+    sm.appendChild(o);
+  });
+}
+
+function setDefaultPeriod(){
+  // Default = most recent exe period
+  var defPeriod=D.periods_exe[0];
+  var defYear=defPeriod.split('-')[0];
+  $('sel-year').value=defYear;
+  fillMonths(defYear);
+  $('sel-month').value=defPeriod;
+  S.period=defPeriod;
 }
 
 function fillPilots(){
@@ -289,7 +319,7 @@ function boot(){
   $('hdr-gen').textContent='Datos: '+D.generated_at;
   $('ftr-gen').textContent='Generado: '+D.generated_at;
 
-  fillPeriods();
+  fillYears();
 
   $('sel-fleet').addEventListener('change',function(e){
     S.fleet=e.target.value;
@@ -297,12 +327,10 @@ function boot(){
     $('sel-rank').value='';
     $('sel-pilot').innerHTML='<option value="">-- Ver resumen general --</option>';
     $('sel-rank').disabled=!S.fleet;
-    $('sel-period').disabled=!S.fleet;
+    $('sel-year').disabled=!S.fleet;
+    $('sel-month').disabled=!S.fleet;
     $('sel-pilot').disabled=true;
-    if(S.fleet){
-      $('sel-period').value=D.periods_exe[0];
-      S.period=D.periods_exe[0];
-    }
+    if(S.fleet){ setDefaultPeriod(); }
     render();
   });
 
@@ -315,7 +343,18 @@ function boot(){
     render();
   });
 
-  $('sel-period').addEventListener('change',function(e){
+  $('sel-year').addEventListener('change',function(e){
+    var y=e.target.value;
+    fillMonths(y);
+    // default to latest exe period in that year, else first month
+    var exeInYear=D.periods_exe.filter(function(p){return p.startsWith(y);});
+    var def=exeInYear.length>0 ? exeInYear[0] : D.periods_chron.filter(function(p){return p.startsWith(y);})[0];
+    $('sel-month').value=def;
+    S.period=def;
+    render();
+  });
+
+  $('sel-month').addEventListener('change',function(e){
     S.period=e.target.value;
     render();
   });
@@ -329,7 +368,8 @@ function boot(){
     S={fleet:'',rank:'',period:'',pilot:''};
     $('sel-fleet').value='';
     $('sel-rank').value=''; $('sel-rank').disabled=true;
-    $('sel-period').value=''; $('sel-period').disabled=true;
+    $('sel-year').value='';  $('sel-year').disabled=true;
+    $('sel-month').innerHTML=''; $('sel-month').disabled=true;
     $('sel-pilot').innerHTML='<option value="">-- Ver resumen general --</option>';
     $('sel-pilot').disabled=true;
     showEmpty();
