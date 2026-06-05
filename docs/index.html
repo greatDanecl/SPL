@@ -105,6 +105,23 @@ footer{padding:8px 28px;font-size:.68rem;color:var(--text3);
 @media(max-width:480px){
   .logo{height:28px}.hdr-div,.hdr-right{display:none}
   .kpi,.ctrl-grp,.ctrl-grp.wide{min-width:100%}}
+
+/* ── Print / PDF export ───────────────────────────────────────────────── */
+.btn-pdf{background:transparent;color:var(--text2);border:1px solid var(--border2);
+  border-radius:8px;padding:7px 14px;font-size:.82rem;font-family:var(--font);
+  cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;
+  transition:background .15s,color .15s,border-color .15s;margin-left:6px}
+.btn-pdf:hover{background:#EEF0FF;color:var(--navy);border-color:var(--navy)}
+@media print{
+  .ctrl-bar,.tab-bar,#btn-pdf,#btn-clear,.hdr-right{display:none!important}
+  .header{box-shadow:none;border-bottom:2px solid #e0e0e0;padding:10px 20px}
+  .kpi-row{display:flex;flex-wrap:wrap;gap:8px;padding:10px 16px}
+  .kpi{min-width:160px;flex:1;box-shadow:none;border:1px solid #ddd;page-break-inside:avoid}
+  .chart-box{page-break-inside:avoid;box-shadow:none;border:1px solid #eee}
+  .row2,.row1{page-break-inside:avoid}
+  body{background:#fff!important}
+  @page{margin:15mm;size:A4 landscape}
+}
 </style>
 </head>
 <body>
@@ -154,6 +171,9 @@ footer{padding:8px 28px;font-size:.68rem;color:var(--text3);
     <span class="ctrl-label">&nbsp;</span>
     <button id="btn-clear" class="btn-clear" title="Limpiar todos los filtros">
       &#10005; Limpiar
+    </button>
+    <button id="btn-pdf" class="btn-pdf" title="Exportar a PDF">
+      &#128438; Exportar PDF
     </button>
   </div>
 </div>
@@ -323,6 +343,18 @@ function boot(){
     $('sel-pilot').innerHTML='<option value="">-- Ver resumen general --</option>';
     $('sel-pilot').disabled=true;
     showEmpty();
+  });
+
+  $('btn-pdf').addEventListener('click',function(){
+    // Give Plotly charts a moment to finish any pending renders
+    var btn=$('btn-pdf');
+    btn.textContent='&#9203; Preparando...';
+    btn.disabled=true;
+    setTimeout(function(){
+      window.print();
+      btn.innerHTML='&#128438; Exportar PDF';
+      btn.disabled=false;
+    }, 400);
   });
 
   $('loader').style.display='none';
