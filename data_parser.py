@@ -267,7 +267,7 @@ def load_all_data() -> pd.DataFrame:
 
     # Deduplicate – same worker/date/activity/rol_type may appear in multiple files
     data = data.drop_duplicates(
-        subset=["staff_num", "str_dt", "activity", "rol_type"], keep="last"
+        subset=["staff_num", "str_dt", "activity", "rol_type", "dep_port", "arv_port"], keep="last"
     )
 
     data["str_dt"] = pd.to_datetime(data["str_dt"], errors="coerce")
