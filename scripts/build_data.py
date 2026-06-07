@@ -162,16 +162,24 @@ def build_overview_block(exe_sub, adh_sub, pub_only=False):
     scat["short"] = scat["full_name"].apply(lambda n: " ".join(str(n).split()[:2]) if pd.notna(n) else "")
 
     # For pub_only: get pub stats from adh_sub pub_flight_hours
-    avg_pub = safe(adh_sub["pub_flight_hours"].mean()) if not adh_sub.empty else None
+    avg_pub_pubonly = safe(adh_sub["pub_flight_hours"].mean()) if not adh_sub.empty else None
+
+    # Consistent set: use diff_valid for exe, pub, AND diff so all 3 KPIs share same pilots
+    # diff_valid = pilots with both exe+pub, neither prolonged → avoids apples-to-oranges comparison
+    avg_exe_cons  = None if pub_only else safe(diff_valid["exe_flight_hours"].mean())
+    avg_pub_cons  = avg_pub_pubonly if pub_only else safe(diff_valid["pub_flight_hours"].mean())
+    avg_diff_cons = None if pub_only else safe(diff_valid["diff_hrs"].mean())
+    # avg_sectors still from full exe_active (not dependent on pub matching)
+    avg_sec_cons  = None if pub_only else safe(exe_active["flight_sectors"].mean())
 
     return {
         "pub_only":    pub_only,
         "n_total":     int(adh_sub["staff_num"].nunique()) if pub_only else int(exe_sub["staff_num"].nunique()),
-        "n_active":    int(adh_sub["staff_num"].nunique()) if pub_only else int(exe_active["staff_num"].nunique()),
-        "avg_exe_hrs": None if pub_only else safe(exe_active["flight_block_hours"].mean()),
-        "avg_pub_hrs": avg_pub,
-        "avg_diff":    None if pub_only else safe(diff_valid["diff_hrs"].mean()),
-        "avg_sectors": None if pub_only else safe(exe_active["flight_sectors"].mean()),
+        "n_active":    int(adh_sub["staff_num"].nunique()) if pub_only else int(diff_valid["staff_num"].nunique()),
+        "avg_exe_hrs": avg_exe_cons,
+        "avg_pub_hrs": avg_pub_cons,
+        "avg_diff":    avg_diff_cons,
+        "avg_sectors": avg_sec_cons,
         "n_more_exe":  0 if pub_only else int((diff_valid["more_is"]=="Ejecutado").sum()),
         "n_more_pub":  0 if pub_only else int((diff_valid["more_is"]=="Publicado").sum()),
         "n_equal":     0 if pub_only else int((diff_valid["more_is"]=="Igual").sum()),
